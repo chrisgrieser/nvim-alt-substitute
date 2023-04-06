@@ -13,7 +13,8 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Supported Regex Flavors](#supported-regex-flavors)
-- [Limitations](#limitations)
+- [Usage](#usage)
+- [Current Limitations](#current-limitations)
 - [Other Search-and-Replace Plugins](#other-search-and-replace-plugins)
 - [Credits](#credits)
 <!--toc:end-->
@@ -27,10 +28,10 @@ Regardless whether you like vimscript or not, learning vim's flavor of regex *ju
 ## Features
 - Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
   operations, in lua patterns or javascript regex.
-- __Incremental preview__ of the substitution.
-- Supports __ranges__, if no range is given, uses the entire buffer (`%`).
-- The __`g` flag__ is supported and works like with `:substitute`. (This means that without the `g` flag, only the first match in a line is replaced; with it, every occurrence in a line is replaced.)
-- __Extensibility__: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
+- Incremental preview of the substitution.
+- Supports ranges
+- The `g` flag is supported and works like with `:substitute`. 
+- Extensibility: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
 
 ```lua
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
@@ -77,9 +78,17 @@ Note that any regex flavor other than `lua` requires the respective language sup
 __Add Support for more flavors__  
 The plugin has been specifically built with extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/alt-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/alt-substitute/regex/template.lua)
 
-## Limitations
-- Only the `g` flag is supported.
-- Does not support `inccommand=split`. Please use `inccommand=unsplit` instead.
+## Usage
+The `:AltSubstitute` works mostly like `:substitute`.
+- The `g` flag works the same way as `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
+- Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
+- Like with `:substitute`, slashes (`/`) delimit search query, replace
+  value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`. This applies even if the regex flavor uses a different character for escaping (like the `%` in lua).
+
+## Current Limitations
+- Flags other than `g` flag are not supported.
+- `inccommand=split` is not supported, Please use `inccommand=unsplit` instead.
+- Line breaks in the search or the replacement value are not supported.
 
 ## Other Search-and-Replace Plugins
 - [nvim-spectre](https://github.com/windwp/nvim-spectre)
