@@ -3,7 +3,7 @@ local M = {}
 
 ---function performing a search
 ---@param str string
----@param toSearch string
+---@param toSearch string *pattern* to search for
 ---@param fromIdx integer perform find from this index
 ---@param language string
 ---@nodiscard
@@ -17,8 +17,8 @@ end
 
 ---function performing the actual string substitution
 ---@param inputLines string[]
----@param toSearch string
----@param toReplace string
+---@param toSearch string *pattern* to search for
+---@param toReplace string replacement value
 ---@param numOfReplacements integer|nil how many occurrences should be replaced;
 ---nil will perform all replacements
 ---@param language string
