@@ -1,5 +1,5 @@
 # nvim-alt-substitute
-A substitute of vim's :substitute that uses alternative regex flavors like lua or javascript instead of vim regex. Supports ranges and incremental preview.
+A substitute of vim's ":substitute" that uses alternative regex flavors like lua or javascript instead of vim regex. Supports ranges and incremental preview.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -8,13 +8,21 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 > The plugin is still WIP and not fully usable yet.
 
 <!--toc:start-->
+- [Motivation](#motivation)
 - [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Supported Regex Flavors](#supported-regex-flavors)
 - [Limitations](#limitations)
+- [Other Search-and-Replace Plugins](#other-search-and-replace-plugins)
 - [Credits](#credits)
 <!--toc:end-->
+
+## Motivation
+<!-- vale Google.FirstPerson = NO -->
+Many people like me have only started (neo)vim after the introduction of lua of configuration language. While pretty much everything about neovim can be done with lua by now, search-and-replace-operations `:substitute` are one of few areas remaining where you still have to use vimscript. 
+
+Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive and frustrating. So why not work with a regex flavor you are already familiar with instead?
 
 ## Features
 - Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
@@ -47,7 +55,7 @@ use {
 {
 	"chrisgrieser/nvim-alt-substitute",
 	cmd = {"S", "AltSubstitute"},
-	opts = true,
+  opts = true,
 },
 ```
 
@@ -76,6 +84,12 @@ The plugin has been specifically build with easy extensibility in mind. It shoul
 ## Limitations
 - Only the `g` flag is supported.
 - Does not support `inccommand=split`. Please use `inccommand=unsplit` instead.
+
+## Other Search-and-Replace Plugins
+- [nvim-spectre](https://github.com/windwp/nvim-spectre)
+- [serch-replace.nvim](https://github.com/roobert/search-replace.nvim)
+- [replacer.nvim](https://github.com/gabrielpoca/replacer.nvim)
+- [nvim-search-and-replace](https://github.com/s1n7ax/nvim-search-and-replace)
 
 ## Credits
 <!-- vale Google.FirstPerson = NO -->

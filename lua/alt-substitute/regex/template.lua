@@ -3,8 +3,9 @@ local M = {}
 --------------------------------------------------------------------------------
 -- INFO
 -- To add a new flavor, you only need to bridge to your languages find/replace
--- operation, e.g. via `vim.fn.system` and fill them in below. Remember to
--- test for characters with escape sequences.
+-- operation, e.g. via `vim.fn.system` and fill them in below. 
+-- - Remember to test for characters with escape sequences.
+-- - If not already, use the Lua LSP for type safety of the parameters & returns
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
