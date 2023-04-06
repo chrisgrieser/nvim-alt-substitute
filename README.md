@@ -27,36 +27,32 @@ Regardless whether you like vimscript or not, learning vim's flavor of regex *ju
 ## Features
 - Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
   operations, in lua patterns or javascript regex.
-- Supports ranges, if no range is given works on the entire buffer (`%` as range)
-- The `g` flag is supported. Without the `g` flag, only the first match in a line is replaced, like `:substitute`.
-- Incremental preview of the substitution.
-- Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
+- __Incremental preview__ of the substitution.
+- Supports __ranges__, if no range is given, uses the entire buffer (`%`).
+- The __`g` flag__ is supported and works like with `:substitute`. (This means that without the `g` flag, only the first match in a line is replaced; with it, every occurrence in a line is replaced.)
+- __Extensibility__: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
 
 ```lua
-foo -> bar                      -- intended replacement
-:%s /foo/bar/                   -- :substitute
-:S /foo/bar/                    -- nvim-alt-substitute
-
-deviceModel2020 -> deviceModel  -- intended replacement
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S /(%w+)%d+/%1/g               -- nvim-alt-substitute (using lua flavor)
+:S /(%w+)%d+/%1/g               -- nvim-alt-substitute (with lua regex)
+deviceModel2020 -> deviceModel  -- result
 ```
 
 ## Installation
 
 ```lua
--- packer
-use {
-	"chrisgrieser/nvim-alt-substitute",
-	config = function() require("alt-substitute").setup({}) end,
-}
-
 -- lazy.nvim
 {
 	"chrisgrieser/nvim-alt-substitute",
 	cmd = {"S", "AltSubstitute"},
   opts = true,
 },
+
+-- packer
+use {
+	"chrisgrieser/nvim-alt-substitute",
+	config = function() require("alt-substitute").setup({}) end,
+}
 ```
 
 ## Configuration
@@ -69,7 +65,7 @@ opts = {
 }
 ```
 
-Note that any regex flavor other than `"lua"` requires the respective language support to be installed on your machine. `"javascript"`, for instance, requires `node`.
+Note that any regex flavor other than `lua` requires the respective language support to be installed on your machine. `javascript`, for instance, requires `node`.
 
 ## Supported Regex Flavors
 
@@ -79,7 +75,7 @@ Note that any regex flavor other than `"lua"` requires the respective language s
 | `javascript`    | `node`       |
 
 __Add Support for more flavors__  
-The plugin has been specifically build with easy extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/alt-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/alt-substitute/regex/template.lua)
+The plugin has been specifically built with extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/alt-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/alt-substitute/regex/template.lua)
 
 ## Limitations
 - Only the `g` flag is supported.
