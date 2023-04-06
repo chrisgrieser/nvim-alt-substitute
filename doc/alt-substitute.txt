@@ -43,9 +43,15 @@ with lua by now, search-and-replace-operations `:substitute` are one of few
 areas remaining where you still have to use vimscript.
 
 Regardless whether you like vimscript or not, learning vim’s flavor of regex
-_just_ for search-and-replace-operations feels somewhat unproductive and
-frustrating. So why not work with a regex flavor you are already familiar with
-instead?
+_just_ for search-and-replace-operations feels somewhat unproductive. So why
+not work with a regex flavor you are already familiar with? Command of lua
+patterns is certainly a more transferrable skill than mastering vim regex.
+Also, lua support comes basically for free without dependencies bundled with
+neovim already.
+
+While lua patterns are indeed lacking, compared to "real" regex, they do come
+with a few quite flexible items like the balanced match `%bxy` or the frontier
+pattern `%f[set]` <https://www.lua.org/manual/5.4/manual.html#6.4.1>.
 
 
 FEATURES                         *alt-substitute-nvim-alt-substitute-features*
@@ -60,7 +66,7 @@ FEATURES                         *alt-substitute-nvim-alt-substitute-features*
 
 >lua
     :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-    :S /(%w+)%d+/%1/g               -- nvim-alt-substitute (with lua regex)
+    :S /(%w+)%d+/%1/g               -- nvim-alt-substitute 
     deviceModel2020 -> deviceModel  -- result
 <
 
