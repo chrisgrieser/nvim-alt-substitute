@@ -20,11 +20,11 @@ local regex = require("sane-substitute.regex")
 ---@return boolean whether to search first or all occurrences in line
 local function processParameters(opts, curBufNum)
 	-- "trimempty" allows to leave out the first and third "/" from regular `:s`
-	local input = vim.split(opts.args, delimiter, { trimempty = true, plain = false })
+	local input = vim.split(opts.args, delimiter, { trimempty = true, plain = true })
 	local toSearch, toReplace, flags = input[1], input[2], input[3]
 	local singleRepl = (flags and flags:find("g")) == nil
 
-	local line1, line2 = opts.line1, opts.line2
+	local line1, line2 = opts.line1, opts.line2 -- range of the command
 	local bufferLines = vim.api.nvim_buf_get_lines(curBufNum, line1 - 1, line2, false)
 
 	return line1, line2, bufferLines, toSearch, toReplace, singleRepl
@@ -138,7 +138,7 @@ end
 
 --------------------------------------------------------------------------------
 
----@class config
+---@class config table containing the options for the plugin
 ---@field regexFlavor string default: lua
 ---@field showNotification boolean whether to show the "x replacements made" notice, default: true
 
@@ -149,18 +149,15 @@ function M.setup(opts)
 	regexFlavor = opts.regexFlavor or "lua"
 	showNotification = opts.showNotification or true
 
-	-- validation
-	local supportedLangs = {
-		lua = true,
-		javascript = false,
-	}
-	if not supportedLangs[regexFlavor] then
+	-- validation that regex module exists
+	local available, _ = pcall(require, "sane-substitute.regex." .. regexFlavor)
+	if not available then
 		vim.notify(regexFlavor .. " is not yet supported as regex flavor.", warn)
 		return
 	end
 
 	-- setup user commands
-	local commands = { "S", "SubSub" }
+	local commands = { "S", "SaneSubstition" }
 	for _, cmd in pairs(commands) do
 		vim.api.nvim_create_user_command(cmd, confirmSubstitution, {
 			nargs = "?",
