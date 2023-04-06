@@ -4,7 +4,7 @@ A substitute of vim's :substitute that uses lua pattern or javascript regex inst
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
 
 > __Note__  
-> The plugin is still WIP.
+> The plugin is still WIP and not fully usable yet.
 
 <!--toc:start-->
 - [Features](#features)

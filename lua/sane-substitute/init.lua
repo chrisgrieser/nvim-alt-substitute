@@ -139,7 +139,7 @@ end
 --------------------------------------------------------------------------------
 
 ---@class config
----@field regexFlavor "lua"|"javascript" default: lua
+---@field regexFlavor string default: lua
 ---@field showNotification boolean whether to show the "x replacements made" notice, default: true
 
 ---@param opts? config
@@ -155,7 +155,7 @@ function M.setup(opts)
 		javascript = false,
 	}
 	if not supportedLangs[regexFlavor] then
-		vim.notify(regexFlavor .. " is not supported as a regex flavor.", warn)
+		vim.notify(regexFlavor .. " is not yet supported as regex flavor.", warn)
 		return
 	end
 
