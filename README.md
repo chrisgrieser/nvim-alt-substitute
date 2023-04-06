@@ -20,7 +20,9 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 <!-- vale Google.FirstPerson = NO -->
 Many people like me have only started (neo)vim after the introduction of lua of configuration language. While pretty much everything about neovim can be done with lua by now, search-and-replace-operations `:substitute` are one of few areas remaining where you still have to use vimscript. 
 
-Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive and frustrating. So why not work with a regex flavor you are already familiar with instead?
+Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. So why not work with a regex flavor you are already familiar with? Command of lua patterns is certainly a more transferrable skill than mastering vim regex. Also, lua support comes basically for free without dependencies bundled with neovim already.
+
+While lua patterns are indeed lacking, compared to "real" regex, they do come with a few quite flexible items like [the balanced match `%bxy` or the frontier pattern[^1] `%f[set]`](https://www.lua.org/manual/5.4/manual.html#6.4.1). 
 
 ## Features
 - Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
@@ -32,7 +34,7 @@ Regardless whether you like vimscript or not, learning vim's flavor of regex *ju
 
 ```lua
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S /(%w+)%d+/%1/g               -- nvim-alt-substitute (with lua regex)
+:S /(%w+)%d+/%1/g               -- nvim-alt-substitute 
 deviceModel2020 -> deviceModel  -- result
 ```
 
@@ -102,3 +104,5 @@ __Profiles__
 __Buy Me a Coffee__  
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+[^1]: Frontier patterns are not mentioned in [neovim's respective section for lua patterns](https://neovim.io/doc/user/luaref.html#luaref-patterns). This is likely due to neovim using LuaJit, which itself is based on Lua 5.1, where [frontier patterns were still an undocumented feature](http://lua-users.org/lists/lua-l/2006-12/msg00536.html). But since they are [officially documented in recent lua version](https://www.lua.org/manual/5.4/manual.html#6.4.1), it should be safe to assume that they are here to stay, so using them should not be an issue.
