@@ -3,18 +3,18 @@
 ==============================================================================
 Table of Contents                          *sane-substitute-table-of-contents*
 
-1. nvim-sane-substitute 😌       |sane-substitute-nvim-sane-substitute-😌|
-  - Features              |sane-substitute-nvim-sane-substitute-😌-features|
-  - Installation      |sane-substitute-nvim-sane-substitute-😌-installation|
-  - Configuration    |sane-substitute-nvim-sane-substitute-😌-configuration|
-  - Support for more flavors|sane-substitute-nvim-sane-substitute-😌-support-for-more-flavors|
-  - Limitations        |sane-substitute-nvim-sane-substitute-😌-limitations|
-  - Credits                |sane-substitute-nvim-sane-substitute-😌-credits|
+1. nvim-sane-substitute                |sane-substitute-nvim-sane-substitute-|
+  - Features                  |sane-substitute-nvim-sane-substitute--features|
+  - Installation          |sane-substitute-nvim-sane-substitute--installation|
+  - Configuration        |sane-substitute-nvim-sane-substitute--configuration|
+  - Supported Regex Flavors|sane-substitute-nvim-sane-substitute--supported-regex-flavors|
+  - Limitations            |sane-substitute-nvim-sane-substitute--limitations|
+  - Credits                    |sane-substitute-nvim-sane-substitute--credits|
 
 ==============================================================================
-1. nvim-sane-substitute 😌       *sane-substitute-nvim-sane-substitute-😌*
+1. nvim-sane-substitute                *sane-substitute-nvim-sane-substitute-*
 
-A substitute of vim’s :substitute that uses lua pattern or javascript regex
+Asubstitute of vim’s :substitute that uses lua pattern or javascript regex
 instead of vim regex. Supports ranges and incremental preview.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
@@ -26,12 +26,12 @@ be able to make search-and-replace operations in your editor.
 - |sane-substitute-features|
 - |sane-substitute-installation|
 - |sane-substitute-configuration|
-- |sane-substitute-support-for-more-flavors|
+- |sane-substitute-supported-regex-flavors|
 - |sane-substitute-limitations|
 - |sane-substitute-credits|
 
 
-FEATURES                  *sane-substitute-nvim-sane-substitute-😌-features*
+FEATURES                      *sane-substitute-nvim-sane-substitute--features*
 
 
 - Use `:SaneSubstitute` or the short form `:S` to do perform search-and-replace
@@ -50,14 +50,14 @@ removing digits appended to any word in the entire buffer.
     deviceModel2020 -> deviceModel
     
     -- vim's :substitute
-    :%s /\(\w\+\)\d*/\1/g
+    :%s /\(\w\+\)\d/\1/g
     
     -- nvim-sane-substitute (using lua flavor)
-    :S (%w+)%d*/%1/g
+    :S (%w+)%d/%1/g
 <
 
 
-INSTALLATION          *sane-substitute-nvim-sane-substitute-😌-installation*
+INSTALLATION              *sane-substitute-nvim-sane-substitute--installation*
 
 >lua
     -- packer
@@ -75,12 +75,12 @@ INSTALLATION          *sane-substitute-nvim-sane-substitute-😌-installation*
 <
 
 
-CONFIGURATION        *sane-substitute-nvim-sane-substitute-😌-configuration*
+CONFIGURATION            *sane-substitute-nvim-sane-substitute--configuration*
 
 >lua
     -- default values
     opts = {
-        regexFlavor = "lua", -- currently only supports "lua" and "javascript"
+        regexFlavor = "lua", -- see below for supported flavors
         showNotification = true, -- whether to show the "x replacements made" notification
     }
 <
@@ -90,21 +90,27 @@ support to be installed on your machine. `"javascript"`, for instance, requires
 `node`.
 
 
-SUPPORT FOR MORE FLAVORS*sane-substitute-nvim-sane-substitute-😌-support-for-more-flavors*
+SUPPORTED REGEX FLAVORS*sane-substitute-nvim-sane-substitute--supported-regex-flavors*
 
-The plugin has been specifically build in with easy extensibility in mind. It
-should take no more than ~10 LoC to add support for more regex flavors. Have a
-look at how javascript regex is supported <./lua/regex/flavors/javascript.lua>.
+  flavor          requirements
+  --------------- --------------
+  lua (default)   -
+  javascript      node
+**Add Support for more flavors** The plugin has been specifically build with
+easy extensibility in mind. It should take no more than ~10 LoC to add support
+for more regex flavors. Have a look at how javascript regex is supported
+<./lua/sane-substitute/regex/javascript.lua>. There is also a template you
+should use. <./lua/sane-substitute/regex/template.lua>
 
 
-LIMITATIONS            *sane-substitute-nvim-sane-substitute-😌-limitations*
+LIMITATIONS                *sane-substitute-nvim-sane-substitute--limitations*
 
 
 - Only the `g` flag is supported.
 - Does not support `inccommand=split`. Please use `inccommand=unsplit` instead.
 
 
-CREDITS                    *sane-substitute-nvim-sane-substitute-😌-credits*
+CREDITS                        *sane-substitute-nvim-sane-substitute--credits*
 
 **About Me** In my day job, I am a sociologist studying the social mechanisms
 underlying the digital economy. For my PhD project, I investigate the
