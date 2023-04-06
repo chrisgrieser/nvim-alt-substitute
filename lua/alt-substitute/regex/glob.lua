@@ -6,9 +6,13 @@ local M = {}
 ---@param globStr string
 ---@return string luaPatternStr
 local function globToLuaPattern(globStr)
-	local escapedString = vim.pesc(globStr)
-	local luaPatternStr = escapedString:gsub("%%%*", ".*"):gsub("%%%?", ".")
-	return luaPatternStr
+	local str = vim
+		.pesc(globStr) -- escape lua magic characters
+		:gsub("([^\\])%%%?", ".") -- unescaped "?"
+		:gsub("^%%%?", ".")
+		:gsub("([^\\])%%%*", ".*") -- unescaped "*"
+		:gsub("^%%%*", ".*") 
+	return str
 end
 
 ---function performing a search

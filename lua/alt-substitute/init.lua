@@ -13,7 +13,6 @@ local function splitByUnescapedSlash(str)
 	local splitStr = {}
 	local input = str .. "/" -- so the pattern also matches end of the str
 
-	-- path/tomy/file
 	for match in input:gmatch("(.-[^\\]?)/") do
 		match = match:gsub("\\/", "/")
 		table.insert(splitStr, match)	
@@ -140,7 +139,7 @@ end
 local function previewSubstitution(opts, ns, preview_buf)
 	if preview_buf then
 		-- stylua: ignore
-		vim.notify_once("'inccommand=split' is not supported yet. Please use 'inccommand=unsplit' instead.", warn)
+		vim.notify_once("'inccommand=split' is not supported. Please use 'inccommand=unsplit' instead.", warn)
 		return
 	end
 	local curBufNum = vim.api.nvim_get_current_buf()
