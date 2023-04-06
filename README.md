@@ -1,20 +1,17 @@
 # nvim-alt-substitute
-A substitute of vim's ":substitute" that uses alternative regex flavors like lua or javascript instead of vim regex. Supports ranges and incremental preview.
+A substitute of vim's ":substitute" Ex-command that uses lua (or glob) patterns of vim regex. Supports incremental preview and ranges.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
-
-> __Note__  
-> The plugin is still WIP and not fully usable yet.
 
 <!--toc:start-->
 - [Motivation](#motivation)
 - [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Supported Regex Flavors](#supported-regex-flavors)
 - [Usage](#usage)
 - [Current Limitations](#current-limitations)
+- [Add Support for more Regex Flavors](#add-support-for-more-regex-flavors)
 - [Other Search-and-Replace Plugins](#other-search-and-replace-plugins)
 - [Credits](#credits)
 <!--toc:end-->
@@ -31,7 +28,7 @@ Regardless whether you like vimscript or not, learning vim's flavor of regex *ju
 - Incremental preview of the substitution.
 - Supports ranges
 - The `g` flag is supported and works like with `:substitute`. 
-- Extensibility: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
+- Extensibility: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#add-support-for-more-regex-flavors)
 
 ```lua
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
@@ -61,23 +58,12 @@ use {
 ```lua
 -- default values
 opts = {
-	regexFlavor = "lua", -- see below for supported flavors
+	regexFlavor = "lua", -- currently: lua|glob
 	showNotification = true, -- whether to show the "x replacements made" notification
 }
 ```
 
 Note that any regex flavor other than `lua` requires the respective language support to be installed on your machine. `javascript`, for instance, requires `node`.
-
-## Supported Regex Flavors
-
-| flavor          | requirements |
-|-----------------|--------------|
-| `lua` (default) | \-           |
-| `glob`          | \-           |
-| `javascript`    | `node`       |
-
-__Add Support for more flavors__  
-The plugin has been specifically built with extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/alt-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/alt-substitute/regex/template.lua)
 
 ## Usage
 The `:AltSubstitute` works mostly like `:substitute`.
@@ -90,6 +76,9 @@ The `:AltSubstitute` works mostly like `:substitute`.
 - Flags other than `g` flag are not supported.
 - `inccommand=split` is not supported, Please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
+
+## Add Support for more Regex Flavors
+The plugin has been specifically built with extensibility in mind. Adding more flavors basically requires bridging one search and one replace function. (Though a certain amount of escaping and performance considerations may be required.) If you want to add support for more languages, have a look this plugin's [regex module](./lua/alt-substitute/regex/), which includes the implementations for lua and glob patterns.
 
 ## Other Search-and-Replace Plugins
 - [nvim-spectre](https://github.com/windwp/nvim-spectre)

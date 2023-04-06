@@ -6,6 +6,7 @@ local M = {}
 -- operation, e.g. via `vim.fn.system` and fill them in below. 
 -- - Remember to test for characters with escape sequences.
 -- - If not already, use the Lua LSP for type safety of the parameters & returns
+-- - the `find` function expects a **one-based** startPos & endPos
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -19,15 +20,15 @@ local M = {}
 ---@param toSearch string *pattern* to search for
 ---@param fromIdx integer perform find starting from this index
 ---@nodiscard
----@return integer startPos of match, nil if no match
----@return integer endPos of match, nil if no match
+---@return integer **one-based** startPos of first match, nil if no match
+---@return integer **one-based** endPos of first match, nil if no match
 function M.find(str, toSearch, fromIdx)
 	-- TODO perform search here
 	local startPos, endPos
 	return startPos, endPos
 end
 
----function performing the actual string substitution
+---function performing the string substitution
 ---@param str string the string to search in
 ---@param toSearch string *pattern* to search for
 ---@param toReplace string replacement value
@@ -37,7 +38,7 @@ end
 ---@return string strWithReplacement
 ---@return integer total number of replacements made (for notification)
 function M.replace(str, toSearch, toReplace, numOfReplacements)
-	-- TODO perform search here
+	-- TODO perform replacement here
 	local strWithReplacement, count
 	return strWithReplacement, count
 end

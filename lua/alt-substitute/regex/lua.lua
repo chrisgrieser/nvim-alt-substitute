@@ -6,8 +6,8 @@ local M = {}
 ---@param toSearch string *pattern* to search for
 ---@param fromIdx integer perform find starting from this index
 ---@nodiscard
----@return integer startPos of match, nil if no match
----@return integer endPos of match, nil if no match
+---@return integer **one-based** startPos of match, nil if no match
+---@return integer **one-based** endPos of match, nil if no match
 function M.find(str, toSearch, fromIdx)
 	local startPos, endPos = str:find(toSearch, fromIdx)
 	return startPos, endPos

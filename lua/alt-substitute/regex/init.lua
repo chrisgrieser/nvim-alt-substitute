@@ -7,8 +7,8 @@ local M = {}
 ---@param fromIdx integer perform find from this index
 ---@param language string
 ---@nodiscard
----@return integer startPos of match, nil if no match
----@return integer endPos of match, nil if no match
+---@return integer **one-based** startPos of match, nil if no match
+---@return integer **one-based** endPos of match, nil if no match
 function M.find(str, toSearch, fromIdx, language)
 	local flavor = require("alt-substitute.regex." .. language)
 	local startPos, endPos = flavor.find(str, toSearch, fromIdx)
