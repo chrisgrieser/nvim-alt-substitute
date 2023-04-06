@@ -4,17 +4,19 @@
 Table of Contents                           *alt-substitute-table-of-contents*
 
 1. nvim-alt-substitute                    |alt-substitute-nvim-alt-substitute|
+  - Motivation                 |alt-substitute-nvim-alt-substitute-motivation|
   - Features                     |alt-substitute-nvim-alt-substitute-features|
   - Installation             |alt-substitute-nvim-alt-substitute-installation|
   - Configuration           |alt-substitute-nvim-alt-substitute-configuration|
   - Supported Regex Flavors|alt-substitute-nvim-alt-substitute-supported-regex-flavors|
   - Limitations               |alt-substitute-nvim-alt-substitute-limitations|
+  - Other Search-and-Replace Plugins|alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins|
   - Credits                       |alt-substitute-nvim-alt-substitute-credits|
 
 ==============================================================================
 1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
-A substitute of vim’s :substitute that uses alternative regex flavors like
+A substitute of vim’s ":substitute" that uses alternative regex flavors like
 lua or javascript instead of vim regex. Supports ranges and incremental
 preview.
 
@@ -24,12 +26,27 @@ be able to make search-and-replace operations in your editor.
 
   **Note** The plugin is still WIP and not fully usable yet.
 
+- |alt-substitute-motivation|
 - |alt-substitute-features|
 - |alt-substitute-installation|
 - |alt-substitute-configuration|
 - |alt-substitute-supported-regex-flavors|
 - |alt-substitute-limitations|
+- |alt-substitute-other-search-and-replace-plugins|
 - |alt-substitute-credits|
+
+
+MOTIVATION                     *alt-substitute-nvim-alt-substitute-motivation*
+
+Many people like me have only started (neo)vim after the introduction of lua of
+configuration language. While pretty much everything about neovim can be done
+with lua by now, search-and-replace-operations `:substitute` are one of few
+areas remaining where you still have to use vimscript.
+
+Regardless whether you like vimscript or not, learning vim’s flavor of regex
+_just_ for search-and-replace-operations feels somewhat unproductive and
+frustrating. So why not work with a regex flavor you are already familiar with
+instead?
 
 
 FEATURES                         *alt-substitute-nvim-alt-substitute-features*
@@ -66,7 +83,7 @@ INSTALLATION                 *alt-substitute-nvim-alt-substitute-installation*
     {
         "chrisgrieser/nvim-alt-substitute",
         cmd = {"S", "AltSubstitute"},
-        opts = true,
+      opts = true,
     },
 <
 
@@ -104,6 +121,15 @@ LIMITATIONS                   *alt-substitute-nvim-alt-substitute-limitations*
 
 - Only the `g` flag is supported.
 - Does not support `inccommand=split`. Please use `inccommand=unsplit` instead.
+
+
+OTHER SEARCH-AND-REPLACE PLUGINS*alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins*
+
+
+- nvim-spectre <https://github.com/windwp/nvim-spectre>
+- serch-replace.nvim <https://github.com/roobert/search-replace.nvim>
+- replacer.nvim <https://github.com/gabrielpoca/replacer.nvim>
+- nvim-search-and-replace <https://github.com/s1n7ax/nvim-search-and-replace>
 
 
 CREDITS                           *alt-substitute-nvim-alt-substitute-credits*
