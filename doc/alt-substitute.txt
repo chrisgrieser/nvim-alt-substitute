@@ -106,6 +106,7 @@ SUPPORTED REGEX FLAVORS*alt-substitute-nvim-alt-substitute-supported-regex-flavo
   flavor          requirements
   --------------- --------------
   lua (default)   -
+  glob            -
   javascript      node
 **Add Support for more flavors** The plugin has been specifically built with
 extensibility in mind. It should take no more than ~10 LoC to add support for
