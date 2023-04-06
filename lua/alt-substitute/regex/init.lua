@@ -10,7 +10,7 @@ local M = {}
 ---@return integer startPos of match, nil if no match
 ---@return integer endPos of match, nil if no match
 function M.find(str, toSearch, fromIdx, language)
-	local flavor = require("sane-substitute.regex." .. language)
+	local flavor = require("alt-substitute.regex." .. language)
 	local startPos, endPos = flavor.find(str, toSearch, fromIdx)
 	return startPos, endPos
 end
@@ -28,7 +28,7 @@ end
 function M.replace(inputLines, toSearch, toReplace, numOfReplacements, language)
 	local outputLines = {}
 	local totalReplCount = 0
-	local flavor = require("sane-substitute.regex." .. language)
+	local flavor = require("alt-substitute.regex." .. language)
 	for _, line in pairs(inputLines) do
 		local newLine, numOfReplMade = flavor.replace(line, toSearch, toReplace, numOfReplacements)
 		totalReplCount = totalReplCount + numOfReplMade

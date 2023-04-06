@@ -4,7 +4,7 @@ local delimiter = "/"
 local hlgroup = "Substitute"
 local regexFlavor, showNotification
 
-local regex = require("sane-substitute.regex")
+local regex = require("alt-substitute.regex")
 
 --------------------------------------------------------------------------------
 
@@ -152,14 +152,14 @@ function M.setup(opts)
 	showNotification = opts.showNotification or true
 
 	-- validation that regex module exists
-	local available, _ = pcall(require, "sane-substitute.regex." .. regexFlavor)
+	local available, _ = pcall(require, "alt-substitute.regex." .. regexFlavor)
 	if not available then
 		vim.notify(regexFlavor .. " is not yet supported as regex flavor.", warn)
 		return
 	end
 
 	-- setup user commands
-	local commands = { "S", "SaneSubstition" }
+	local commands = { "S", "AltSubstition" }
 	for _, cmd in pairs(commands) do
 		vim.api.nvim_create_user_command(cmd, confirmSubstitution, {
 			nargs = "?",

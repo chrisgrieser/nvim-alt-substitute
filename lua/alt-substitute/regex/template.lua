@@ -10,7 +10,7 @@ local M = {}
 --------------------------------------------------------------------------------
 -- TODO Create a copy of file file and rename it to the regex flavor.
 -- TODO Add info to this table in the README that the language is supported:
--- https://github.com/chrisgrieser/nvim-sane-substitute#supported-regex-flavors
+-- https://github.com/chrisgrieser/nvim-alt-substitute#supported-regex-flavors
 --------------------------------------------------------------------------------
 
 ---function performing a search

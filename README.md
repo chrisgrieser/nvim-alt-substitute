@@ -1,5 +1,5 @@
-# nvim-sane-substitute 😌
-A substitute of vim's :substitute that uses lua pattern or javascript regex instead of vim regex. Supports ranges and incremental preview.
+# nvim-alt-substitute
+A substitute of vim's :substitute that uses alternative regex flavors like lua or javascript instead of vim regex. Supports ranges and incremental preview.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -17,7 +17,7 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 <!--toc:end-->
 
 ## Features
-- Use `:SaneSubstitute` or the short form `:S` to do perform search-and-replace
+- Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
   operations, in lua patterns or javascript regex.
 - Supports ranges, if no range is given works on the entire buffer (`%` as range)
 - The `g` flag is supported. Without the `g` flag, only the first match in a line is replaced, like `:substitute`.
@@ -27,11 +27,11 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 ```lua
 foo -> bar                      -- intended replacement
 :%s /foo/bar/                   -- :substitute
-:S /foo/bar                      -- nvim-sane-substitute
+:S /foo/bar/                    -- nvim-alt-substitute
 
 deviceModel2020 -> deviceModel  -- intended replacement
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S /(%w+)%d+/%1/g                -- nvim-sane-substitute (using lua flavor)
+:S /(%w+)%d+/%1/g               -- nvim-alt-substitute (using lua flavor)
 ```
 
 ## Installation
@@ -39,14 +39,14 @@ deviceModel2020 -> deviceModel  -- intended replacement
 ```lua
 -- packer
 use {
-	"chrisgrieser/nvim-sane-substitute",
-	config = function() require("sane-substitute").setup({}) end,
+	"chrisgrieser/nvim-alt-substitute",
+	config = function() require("alt-substitute").setup({}) end,
 }
 
 -- lazy.nvim
 {
-	"chrisgrieser/nvim-sane-substitute",
-	cmd = {"S", "SaneSubstitute"},
+	"chrisgrieser/nvim-alt-substitute",
+	cmd = {"S", "AltSubstitute"},
 	opts = true,
 },
 ```
@@ -71,7 +71,7 @@ Note that any regex flavor other than `"lua"` requires the respective language s
 | `javascript`    | `node`       |
 
 __Add Support for more flavors__  
-The plugin has been specifically build with easy extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/sane-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/sane-substitute/regex/template.lua)
+The plugin has been specifically build with easy extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/alt-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/alt-substitute/regex/template.lua)
 
 ## Limitations
 - Only the `g` flag is supported.
