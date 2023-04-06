@@ -19,12 +19,12 @@ end
 ---@param inputLines string[]
 ---@param toSearch string
 ---@param toReplace string
----@param numOfReplacements integer|nil how many occurrences should be replaced.
+---@param numOfReplacements integer|nil how many occurrences should be replaced;
 ---nil will perform all replacements
 ---@param language string
 ---@nodiscard
 ---@return string[] outputLines
----@return integer total number of replacements mode (for notification)
+---@return integer total number of replacements made (for notification)
 function M.replace(inputLines, toSearch, toReplace, numOfReplacements, language)
 	local outputLines = {}
 	local totalReplCount = 0

@@ -1,6 +1,7 @@
 # nvim-sane-substitute 😌
 A substitute of vim's :substitute that uses lua pattern or javascript regex instead of vim regex. Supports ranges and incremental preview.
 
+<!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
 
 > __Note__  
@@ -10,7 +11,7 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 - [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Support for more flavors](#support-for-more-flavors)
+- [Supported Regex Flavors](#supported-regex-flavors)
 - [Limitations](#limitations)
 - [Credits](#credits)
 <!--toc:end-->
@@ -22,7 +23,7 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 - The `g` flag is supported and works like with `:substitute`. Without the `g`
   flag, only the first match per line is replaced.
 - Incremental preview of your substitution.
-- Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#support-for-more-flavors)
+- Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
 
 An example of `:substitute` and `:SaneSubstitute` that does the same thing, removing digits appended to any word in the entire buffer.
 
@@ -35,7 +36,6 @@ deviceModel2020 -> deviceModel
 
 -- nvim-sane-substitute (using lua flavor)
 :S (%w+)%d*/%1/g
-
 ```
 
 ## Installation
@@ -60,15 +60,22 @@ use {
 ```lua
 -- default values
 opts = {
-	regexFlavor = "lua", -- currently only supports "lua" and "javascript"
+	regexFlavor = "lua", -- see below for supported flavors
 	showNotification = true, -- whether to show the "x replacements made" notification
 }
 ```
 
 Note that any regex flavor other than `"lua"` requires the respective language support to be installed on your machine. `"javascript"`, for instance, requires `node`.
 
-## Support for more flavors
-The plugin has been specifically build in with easy extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/regex/flavors/javascript.lua).
+## Supported Regex Flavors
+
+| flavor          | requirements |
+|-----------------|--------------|
+| `lua` (default) | \-           |
+| `javascript`    | `node`       |
+
+__Add Support for more flavors__  
+The plugin has been specifically build with easy extensibility in mind. It should take no more than ~10 LoC to add support for more regex flavors. Have a look at [how javascript regex is supported](./lua/sane-substitute/regex/javascript.lua). [There is also a template you should use.](./lua/sane-substitute/regex/template.lua)
 
 ## Limitations
 - Only the `g` flag is supported.
