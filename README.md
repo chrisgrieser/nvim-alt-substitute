@@ -19,23 +19,19 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 ## Features
 - Use `:SaneSubstitute` or the short form `:S` to do perform search-and-replace
   operations, in lua patterns or javascript regex.
-- Supports ranges, if no range is given, works on the entire buffer (`%s`)
-- The `g` flag is supported and works like with `:substitute`. Without the `g`
-  flag, only the first match per line is replaced.
-- Incremental preview of your substitution.
+- Supports ranges, if no range is given works on the entire buffer (`%` as range)
+- The `g` flag is supported. Without the `g` flag, only the first match in a line is replaced, like `:substitute`.
+- Incremental preview of the substitution.
 - Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#supported-regex-flavors)
 
-An example of `:substitute` and `:SaneSubstitute` that does the same thing, removing digits appended to any word in the entire buffer.
-
 ```lua
--- intended replacement operation
-deviceModel2020 -> deviceModel
+foo -> bar                      -- intended replacement
+:%s /foo/bar/                   -- :substitute
+:S foo/bar                      -- nvim-sane-substitute
 
--- vim's :substitute
-:%s /\(\w\+\)\d*/\1/g
-
--- nvim-sane-substitute (using lua flavor)
-:S (%w+)%d*/%1/g
+deviceModel2020 -> deviceModel  -- intended replacement
+:%s /\(\w\+\)\d\+/\1/g          -- :substitute
+:S (%w+)%d+/%1/g                -- nvim-sane-substitute (using lua flavor)
 ```
 
 ## Installation
@@ -44,7 +40,7 @@ deviceModel2020 -> deviceModel
 -- packer
 use {
 	"chrisgrieser/nvim-sane-substitute",
-	config = function () require("sane-substitute").setup({}) end,
+	config = function() require("sane-substitute").setup({}) end,
 }
 
 -- lazy.nvim
