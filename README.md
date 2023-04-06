@@ -27,11 +27,11 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 ```lua
 foo -> bar                      -- intended replacement
 :%s /foo/bar/                   -- :substitute
-:S foo/bar                      -- nvim-sane-substitute
+:S /foo/bar                      -- nvim-sane-substitute
 
 deviceModel2020 -> deviceModel  -- intended replacement
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S (%w+)%d+/%1/g                -- nvim-sane-substitute (using lua flavor)
+:S /(%w+)%d+/%1/g                -- nvim-sane-substitute (using lua flavor)
 ```
 
 ## Installation

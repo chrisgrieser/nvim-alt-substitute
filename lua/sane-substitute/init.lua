@@ -41,25 +41,27 @@ local function previewAndHighlightReplacements(opts, ns, curBufNum)
 	local line1, line2, bufferLines, toSearch, toReplace, singleRepl = processParameters(opts, curBufNum)
 	if not toReplace then return end
 
-	-- preview changes
+	-- PREVIEW CHANGES
 	local numOfReplacement = singleRepl and 1 or nil
 	local newBufferLines = regex.replace(bufferLines, toSearch, toReplace, numOfReplacement, regexFlavor)
 	vim.api.nvim_buf_set_lines(curBufNum, line1 - 1, line2, false, newBufferLines)
 
-	-- add highlights
+	-- ADD HIGHLIGHTS
+	-- iterate lines in range
 	for i, line in ipairs(bufferLines) do
 		local lineIdx = line1 + i - 2
 
-		-- find all startPositions in the line
+		-- find all matches in the line
 		local startPositions = {}
 		local start = 0
 		while true do
 			start, _ = regex.find(line, toSearch, start + 1, regexFlavor)
-			if not start then break end
+			if not start then break end -- no more matches found
 			table.insert(startPositions, start)
+			if singleRepl then break end -- only one match needed
 		end
 
-		-- iterate matches in given line
+		-- iterate matches
 		local previousShift = 0
 		for ii, startPos in ipairs(startPositions) do
 			local _, endPos = regex.find(line, toSearch, startPos, regexFlavor)
