@@ -1,21 +1,22 @@
-*sane-substitute.txt*        For NVIM v0.8.0        Last change: 2023 April 06
+*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 06
 
 ==============================================================================
-Table of Contents                          *sane-substitute-table-of-contents*
+Table of Contents                           *alt-substitute-table-of-contents*
 
-1. nvim-sane-substitute                |sane-substitute-nvim-sane-substitute-|
-  - Features                  |sane-substitute-nvim-sane-substitute--features|
-  - Installation          |sane-substitute-nvim-sane-substitute--installation|
-  - Configuration        |sane-substitute-nvim-sane-substitute--configuration|
-  - Supported Regex Flavors|sane-substitute-nvim-sane-substitute--supported-regex-flavors|
-  - Limitations            |sane-substitute-nvim-sane-substitute--limitations|
-  - Credits                    |sane-substitute-nvim-sane-substitute--credits|
+1. nvim-alt-substitute                    |alt-substitute-nvim-alt-substitute|
+  - Features                     |alt-substitute-nvim-alt-substitute-features|
+  - Installation             |alt-substitute-nvim-alt-substitute-installation|
+  - Configuration           |alt-substitute-nvim-alt-substitute-configuration|
+  - Supported Regex Flavors|alt-substitute-nvim-alt-substitute-supported-regex-flavors|
+  - Limitations               |alt-substitute-nvim-alt-substitute-limitations|
+  - Credits                       |alt-substitute-nvim-alt-substitute-credits|
 
 ==============================================================================
-1. nvim-sane-substitute                *sane-substitute-nvim-sane-substitute-*
+1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
-Asubstitute of vim’s :substitute that uses lua pattern or javascript regex
-instead of vim regex. Supports ranges and incremental preview.
+A substitute of vim’s :substitute that uses alternative regex flavors like
+lua or javascript instead of vim regex. Supports ranges and incremental
+preview.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
 be able to make search-and-replace operations in your editor.
@@ -23,54 +24,54 @@ be able to make search-and-replace operations in your editor.
 
   **Note** The plugin is still WIP and not fully usable yet.
 
-- |sane-substitute-features|
-- |sane-substitute-installation|
-- |sane-substitute-configuration|
-- |sane-substitute-supported-regex-flavors|
-- |sane-substitute-limitations|
-- |sane-substitute-credits|
+- |alt-substitute-features|
+- |alt-substitute-installation|
+- |alt-substitute-configuration|
+- |alt-substitute-supported-regex-flavors|
+- |alt-substitute-limitations|
+- |alt-substitute-credits|
 
 
-FEATURES                      *sane-substitute-nvim-sane-substitute--features*
+FEATURES                         *alt-substitute-nvim-alt-substitute-features*
 
 
-- Use `:SaneSubstitute` or the short form `:S` to do perform search-and-replace
+- Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
     operations, in lua patterns or javascript regex.
 - Supports ranges, if no range is given works on the entire buffer (`%` as range)
 - The `g` flag is supported. Without the `g` flag, only the first match in a line is replaced, like `:substitute`.
 - Incremental preview of the substitution.
-- Support for more flavors is easy to add. |sane-substitute-pull-requests-adding-more-regex-flavors-are-welcome.|
+- Support for more flavors is easy to add. |alt-substitute-pull-requests-adding-more-regex-flavors-are-welcome.|
 
 >lua
     foo -> bar                      -- intended replacement
     :%s /foo/bar/                   -- :substitute
-    :S /foo/bar                      -- nvim-sane-substitute
+    :S /foo/bar/                    -- nvim-alt-substitute
     
     deviceModel2020 -> deviceModel  -- intended replacement
     :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-    :S /(%w+)%d+/%1/g                -- nvim-sane-substitute (using lua flavor)
+    :S /(%w+)%d+/%1/g               -- nvim-alt-substitute (using lua flavor)
 <
 
 
-INSTALLATION              *sane-substitute-nvim-sane-substitute--installation*
+INSTALLATION                 *alt-substitute-nvim-alt-substitute-installation*
 
 >lua
     -- packer
     use {
-        "chrisgrieser/nvim-sane-substitute",
-        config = function() require("sane-substitute").setup({}) end,
+        "chrisgrieser/nvim-alt-substitute",
+        config = function() require("alt-substitute").setup({}) end,
     }
     
     -- lazy.nvim
     {
-        "chrisgrieser/nvim-sane-substitute",
-        cmd = {"S", "SaneSubstitute"},
+        "chrisgrieser/nvim-alt-substitute",
+        cmd = {"S", "AltSubstitute"},
         opts = true,
     },
 <
 
 
-CONFIGURATION            *sane-substitute-nvim-sane-substitute--configuration*
+CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 
 >lua
     -- default values
@@ -85,7 +86,7 @@ support to be installed on your machine. `"javascript"`, for instance, requires
 `node`.
 
 
-SUPPORTED REGEX FLAVORS*sane-substitute-nvim-sane-substitute--supported-regex-flavors*
+SUPPORTED REGEX FLAVORS*alt-substitute-nvim-alt-substitute-supported-regex-flavors*
 
   flavor          requirements
   --------------- --------------
@@ -94,18 +95,18 @@ SUPPORTED REGEX FLAVORS*sane-substitute-nvim-sane-substitute--supported-regex-fl
 **Add Support for more flavors** The plugin has been specifically build with
 easy extensibility in mind. It should take no more than ~10 LoC to add support
 for more regex flavors. Have a look at how javascript regex is supported
-<./lua/sane-substitute/regex/javascript.lua>. There is also a template you
-should use. <./lua/sane-substitute/regex/template.lua>
+<./lua/alt-substitute/regex/javascript.lua>. There is also a template you
+should use. <./lua/alt-substitute/regex/template.lua>
 
 
-LIMITATIONS                *sane-substitute-nvim-sane-substitute--limitations*
+LIMITATIONS                   *alt-substitute-nvim-alt-substitute-limitations*
 
 
 - Only the `g` flag is supported.
 - Does not support `inccommand=split`. Please use `inccommand=unsplit` instead.
 
 
-CREDITS                        *sane-substitute-nvim-sane-substitute--credits*
+CREDITS                           *alt-substitute-nvim-alt-substitute-credits*
 
 **About Me** In my day job, I am a sociologist studying the social mechanisms
 underlying the digital economy. For my PhD project, I investigate the
