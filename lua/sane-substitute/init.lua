@@ -125,9 +125,9 @@ local function previewSubstitution(opts, ns, preview_buf)
 	local curBufNum = vim.api.nvim_get_current_buf()
 
 	local input = vim.split(opts.args, delimiter, { trimempty = true, plain = false })
-	local hasReplacementValue = input[2]
+	local toReplace = input[2]
 
-	if not hasReplacementValue then
+	if not (toReplace) or toReplace == "" then
 		highlightSearches(opts, ns, curBufNum)
 	else
 		previewAndHighlightReplacements(opts, ns, curBufNum)
