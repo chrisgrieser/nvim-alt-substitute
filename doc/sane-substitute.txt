@@ -21,7 +21,7 @@ Since you really don’t want to learn a whole new flavor of regex, _just_ to
 be able to make search-and-replace operations in your editor.
 
 
-  **Note** The plugin is still WIP.
+  **Note** The plugin is still WIP and not fully usable yet.
 
 - |sane-substitute-features|
 - |sane-substitute-installation|
