@@ -173,7 +173,7 @@ function M.setup(opts)
 	-- validation that regex module exists
 	local available, _ = pcall(require, "alt-substitute.regex." .. regexFlavor)
 	if not available then
-		vim.notify(regexFlavor .. " is not yet supported as regex flavor.", warn)
+		vim.notify(regexFlavor .. " is not supported as regex flavor.", warn)
 		return
 	end
 

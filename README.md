@@ -73,6 +73,7 @@ Note that any regex flavor other than `lua` requires the respective language sup
 | flavor          | requirements |
 |-----------------|--------------|
 | `lua` (default) | \-           |
+| `glob`          | \-           |
 | `javascript`    | `node`       |
 
 __Add Support for more flavors__  
