@@ -8,32 +8,29 @@ Table of Contents                           *alt-substitute-table-of-contents*
   - Features                     |alt-substitute-nvim-alt-substitute-features|
   - Installation             |alt-substitute-nvim-alt-substitute-installation|
   - Configuration           |alt-substitute-nvim-alt-substitute-configuration|
-  - Supported Regex Flavors|alt-substitute-nvim-alt-substitute-supported-regex-flavors|
   - Usage                           |alt-substitute-nvim-alt-substitute-usage|
   - Current Limitations|alt-substitute-nvim-alt-substitute-current-limitations|
+  - Add Support for more Regex Flavors|alt-substitute-nvim-alt-substitute-add-support-for-more-regex-flavors|
   - Other Search-and-Replace Plugins|alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins|
   - Credits                       |alt-substitute-nvim-alt-substitute-credits|
 
 ==============================================================================
 1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
-A substitute of vim’s ":substitute" that uses alternative regex flavors like
-lua or javascript instead of vim regex. Supports ranges and incremental
-preview.
+A substitute of vim’s ":substitute" Ex-command that uses lua (or glob)
+patterns of vim regex. Supports incremental preview and ranges.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
 be able to make search-and-replace operations in your editor.
 
 
-  **Note** The plugin is still WIP and not fully usable yet.
-
 - |alt-substitute-motivation|
 - |alt-substitute-features|
 - |alt-substitute-installation|
 - |alt-substitute-configuration|
-- |alt-substitute-supported-regex-flavors|
 - |alt-substitute-usage|
 - |alt-substitute-current-limitations|
+- |alt-substitute-add-support-for-more-regex-flavors|
 - |alt-substitute-other-search-and-replace-plugins|
 - |alt-substitute-credits|
 
@@ -91,7 +88,7 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 >lua
     -- default values
     opts = {
-        regexFlavor = "lua", -- see below for supported flavors
+        regexFlavor = "lua", -- currently: lua|glob
         showNotification = true, -- whether to show the "x replacements made" notification
     }
 <
@@ -99,20 +96,6 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 Note that any regex flavor other than `lua` requires the respective language
 support to be installed on your machine. `javascript`, for instance, requires
 `node`.
-
-
-SUPPORTED REGEX FLAVORS*alt-substitute-nvim-alt-substitute-supported-regex-flavors*
-
-  flavor          requirements
-  --------------- --------------
-  lua (default)   -
-  glob            -
-  javascript      node
-**Add Support for more flavors** The plugin has been specifically built with
-extensibility in mind. It should take no more than ~10 LoC to add support for
-more regex flavors. Have a look at how javascript regex is supported
-<./lua/alt-substitute/regex/javascript.lua>. There is also a template you
-should use. <./lua/alt-substitute/regex/template.lua>
 
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
@@ -135,6 +118,16 @@ CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
 - Flags other than `g` flag are not supported.
 - `inccommand=split` is not supported, Please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
+
+
+ADD SUPPORT FOR MORE REGEX FLAVORS*alt-substitute-nvim-alt-substitute-add-support-for-more-regex-flavors*
+
+The plugin has been specifically built with extensibility in mind. Adding more
+flavors basically requires bridging one search and one replace function.
+(Though a certain amount of escaping and performance considerations may be
+required.) If you want to add support for more languages, have a look this
+plugin’s regex module <./lua/alt-substitute/regex/>, which includes the
+implementations for lua and glob patterns.
 
 
 OTHER SEARCH-AND-REPLACE PLUGINS*alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins*
