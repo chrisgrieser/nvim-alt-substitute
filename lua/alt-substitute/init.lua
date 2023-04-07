@@ -18,8 +18,7 @@ local function previewAndHighlightReplacements(opts, ns, curBufNum)
 	if not toReplace then return end
 
 	-- PREVIEW CHANGES
-	local numOfReplacement = flags:find("g") and "all" or 1
-	local newBufferLines = regex.replace(bufferLines, toSearch, toReplace, numOfReplacement, regexFlavor)
+	local newBufferLines = regex.replace(bufferLines, toSearch, toReplace, nil, flags, regexFlavor)
 	vim.api.nvim_buf_set_lines(curBufNum, line1 - 1, line2, false, newBufferLines)
 
 	-- ADD HIGHLIGHTS
@@ -31,7 +30,7 @@ local function previewAndHighlightReplacements(opts, ns, curBufNum)
 		local startPositions = {}
 		local start = 0
 		while true do
-			start, _ = regex.find(line, toSearch, start + 1, regexFlavor)
+			start, _ = regex.find(line, toSearch, start + 1, flags, regexFlavor)
 			if not start then break end -- no more matches found
 			table.insert(startPositions, start)
 			if not (flags:find("g")) then break end
@@ -40,8 +39,8 @@ local function previewAndHighlightReplacements(opts, ns, curBufNum)
 		-- iterate matches
 		local previousShift = 0
 		for ii, startPos in ipairs(startPositions) do
-			local _, endPos = regex.find(line, toSearch, startPos, regexFlavor)
-			local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, regexFlavor))[1]
+			local _, endPos = regex.find(line, toSearch, startPos, flags, regexFlavor)
+			local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, flags, regexFlavor))[1]
 			local diff = (#lineWithSomeSubs - #line)
 			startPos = startPos + previousShift
 			endPos = endPos + diff -- shift of end position due to replacement
@@ -56,11 +55,11 @@ end
 ---@param ns integer namespace id to use for highlights
 ---@param curBufNum integer buffer id
 local function highlightSearches(opts, ns, curBufNum)
-	local line1, _, bufferLines, toSearch, _, _ = parameters.process(opts, curBufNum)
+	local line1, _, bufferLines, toSearch, _, flags = parameters.process(opts, curBufNum)
 	for i, line in ipairs(bufferLines) do
 		-- only highlighting first match, since the g-flag can only be entered
 		-- when there is a substitution value
-		local startPos, endPos = regex.find(line, toSearch, 1, regexFlavor)
+		local startPos, endPos = regex.find(line, toSearch, 1, flags, regexFlavor)
 		if startPos then
 			vim.api.nvim_buf_add_highlight(0, ns, hlgroup, line1 + i - 2, startPos - 1, endPos)
 		end
@@ -80,9 +79,8 @@ local function confirmSubstitution(opts)
 		return
 	end
 
-	local numOfReplacement = flags:find("g") and "all" or 1
 	local newBufferLines, totalReplacementCount =
-		regex.replace(bufferLines, toSearch, toReplace, numOfReplacement, regexFlavor)
+		regex.replace(bufferLines, toSearch, toReplace, nil, flags, regexFlavor)
 	vim.api.nvim_buf_set_lines(curBufNum, line1 - 1, line2, false, newBufferLines)
 	if showNotification then
 		vim.notify("Replaced " .. tostring(totalReplacementCount) .. " instances.")

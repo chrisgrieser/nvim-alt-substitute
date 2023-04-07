@@ -1,5 +1,5 @@
 # nvim-alt-substitute
-A substitute of vim's ":substitute" Ex-command that uses lua patterns of vim regex. Supports incremental preview and ranges.
+A substitute of vim's `:substitute` Ex-command that uses lua patterns instead of vim regex. Supports incremental preview and ranges.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -44,7 +44,7 @@ deviceModel2020 -> deviceModel  -- result
 {
 	"chrisgrieser/nvim-alt-substitute",
 	cmd = {"S", "AltSubstitute"},
-  opts = true,
+	opts = true,
 },
 
 -- packer
@@ -65,14 +65,25 @@ opts = {
 
 ## Usage
 The `:AltSubstitute` works mostly like `:substitute`.
-- The `g` flag works the same way as `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
-- Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
+
+### Flags
+- `g`: works the same way as `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
+- `f`: the search query and replace value are treated as __fixed__ strings,
+  meaning lua magic characters are treated as literal strings.
+
+### Ranges
+- Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). 
+- However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
+
+### Escaping
 - Like with `:substitute`, slashes (`/`) delimit search query, replace
-  value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`.
+  value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`. 
 
 ## Current Limitations
-- Flags other than `g` flag are not supported.
-- `inccommand=split` is not supported, Please use `inccommand=unsplit` instead.
+- `:substitution` flags other than `g` are not supported.
+- The `ignorecase` and the `smartcase` option are ignored, the search is always
+  casesensitive.
+- `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
 
 ## Add Support for more Regex Flavors
@@ -103,4 +114,4 @@ __Buy Me a Coffee__
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-[^1]: Frontier patterns are not mentioned in [neovim's respective section for lua patterns](https://neovim.io/doc/user/luaref.html#luaref-patterns). This is likely due to neovim using LuaJit, which itself is based on Lua 5.1, where [frontier patterns were still an undocumented feature](http://lua-users.org/lists/lua-l/2006-12/msg00536.html). But since they are [officially documented in recent lua version](https://www.lua.org/manual/5.4/manual.html#6.4.1), it should be safe to assume that they are here to stay, so using them should not be an issue.
+[^1]: Frontier patterns are not mentioned in [neovim's respective section for lua patterns](https://neovim.io/doc/user/luaref.html#luaref-patterns). This is likely due to neovim using LuaJit, which itself is based on Lua 5.1, where [frontier patterns were still an undocumented feature](http://lua-users.org/lists/lua-l/2006-12/msg00536.html). But since frontier patterns are [officially documented in the most recent lua version](https://www.lua.org/manual/5.4/manual.html#6.4.1), it should be safe to assume that they are here to stay, so using them should not be an issue.
