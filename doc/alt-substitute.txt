@@ -18,7 +18,7 @@ Table of Contents                           *alt-substitute-table-of-contents*
 1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
 A substitute of vim’s `:substitute` Ex-command that uses lua patterns instead
-of vim regex. Supports incremental preview and ranges.
+of vim regex. Supports incremental preview.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
 be able to make search-and-replace operations in your editor.
@@ -96,6 +96,9 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
     }
 <
 
+**Appearance** The incremental preview uses the same highlight group as
+`:substittue`, namely `Substitition`.
+
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
 
@@ -133,6 +136,8 @@ CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
     casesensitive.
 - `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
+- Delimiters other than `/` are not supported yet. (You can make a PR to add
+    them, the relevant functions are in the process-parameters module <./lua/alt-substitute/process-parameters.lua>)
 
 
 ADD SUPPORT FOR MORE REGEX FLAVORS*alt-substitute-nvim-alt-substitute-add-support-for-more-regex-flavors*
