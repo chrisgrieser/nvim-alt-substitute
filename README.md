@@ -25,16 +25,18 @@ Regardless whether you like vimscript or not, learning vim's flavor of regex *ju
 While lua patterns are indeed lacking, compared to "real" regex, they do come with a few quite flexible items like [the balanced match `%bxy` or the frontier pattern[^1] `%f[set]`](https://www.lua.org/manual/5.4/manual.html#6.4.1). 
 
 ## Features
-- Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
-  operations, in lua patterns or javascript regex.
+- `:AltSubstitute` (short form `:S`) to perform search-and-replace
+  operations using lua patterns.
 - Incremental preview of the substitution.
-- Supports ranges
+- Supports ranges, using `%` by default.
 - The `g` flag is supported and works like with `:substitute`. 
+- New flags: `i` for case-insensitive search and `f` for fixed (literal)
+  strings.
 
 ```lua
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
 :S /(%w+)%d+/%1/g               -- nvim-alt-substitute 
-deviceModel2020 -> deviceModel  -- result
+deviceModel2020 -> deviceModel  -- effect
 ```
 
 ## Installation
@@ -64,12 +66,13 @@ opts = {
 ```
 
 ## Usage
-The `:AltSubstitute` works mostly like `:substitute`.
+The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
 ### Flags
-- `g`: works the same way as `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
-- `f`: the search query and replace value are treated as __fixed__ strings,
+- `g`: works the same as the `g` flag from `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
+- `f`: the search query and replace value are treated as __fixed strings__,
   meaning lua magic characters are treated as literal strings.
+- `i`: the search query is __case insensitive__. The `i` flag is ignored when the `f` flag is also used.
 
 ### Ranges
 - Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). 
