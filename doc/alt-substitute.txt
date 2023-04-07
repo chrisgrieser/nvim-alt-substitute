@@ -17,8 +17,8 @@ Table of Contents                           *alt-substitute-table-of-contents*
 ==============================================================================
 1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
-A substitute of vim’s ":substitute" Ex-command that uses lua patterns of vim
-regex. Supports incremental preview and ranges.
+A substitute of vim’s `:substitute` Ex-command that uses lua patterns instead
+of vim regex. Supports incremental preview and ranges.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
 be able to make search-and-replace operations in your editor.
@@ -77,7 +77,7 @@ INSTALLATION                 *alt-substitute-nvim-alt-substitute-installation*
     {
         "chrisgrieser/nvim-alt-substitute",
         cmd = {"S", "AltSubstitute"},
-      opts = true,
+        opts = true,
     },
     
     -- packer
@@ -100,21 +100,38 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
 
-The `:AltSubstitute` works mostly like `:substitute`. - The `g` flag works the
-same way as `:substitute`Without the `g` flag, only the first match in a line
-is replaced. With it, every occurrence in a line is replaced. - Ranges are
-line-based and work |like all other vim command|. However, as opposed to
-`:substitute`, `:AltSubstitute` works on the whole buffer when no range is
-given. (In other words, `%` is the default range.) - Like with `:substitute`,
-slashes (`/`) delimit search query, replace value, and flags. Therefore, to
-search for or replace a `/` you need to escape it with a backslash: `\/`.
+The `:AltSubstitute` works mostly like `:substitute`.
+
+
+FLAGS ~
+
+
+- `g`works the same way as `:substitute`Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
+- `f`the search query and replace value are treated as **fixed** strings,
+    meaning lua magic characters are treated as literal strings.
+
+
+RANGES ~
+
+
+- Ranges are line-based and work |like all other vim command|.
+- However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
+
+
+ESCAPING ~
+
+
+- Like with `:substitute`, slashes (`/`) delimit search query, replace
+    value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`.
 
 
 CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
 
 
-- Flags other than `g` flag are not supported.
-- `inccommand=split` is not supported, Please use `inccommand=unsplit` instead.
+- `:substitution` flags other than `g` are not supported.
+- The `ignorecase` and the `smartcase` option are ignored, the search is always
+    casesensitive.
+- `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
 
 
