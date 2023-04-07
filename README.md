@@ -1,5 +1,5 @@
 # nvim-alt-substitute
-A substitute of vim's ":substitute" Ex-command that uses lua (or glob) patterns of vim regex. Supports incremental preview and ranges.
+A substitute of vim's ":substitute" Ex-command that uses lua patterns of vim regex. Supports incremental preview and ranges.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -30,7 +30,6 @@ While lua patterns are indeed lacking, compared to "real" regex, they do come wi
 - Incremental preview of the substitution.
 - Supports ranges
 - The `g` flag is supported and works like with `:substitute`. 
-- Extensibility: Support for more flavors is easy to add. [Pull Requests adding more regex flavors are welcome.](#add-support-for-more-regex-flavors)
 
 ```lua
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
@@ -60,19 +59,16 @@ use {
 ```lua
 -- default values
 opts = {
-	regexFlavor = "lua", -- currently: lua|glob
 	showNotification = true, -- whether to show the "x replacements made" notification
 }
 ```
-
-Note that any regex flavor other than `lua` requires the respective language support to be installed on your machine. `javascript`, for instance, requires `node`.
 
 ## Usage
 The `:AltSubstitute` works mostly like `:substitute`.
 - The `g` flag works the same way as `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
 - Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
 - Like with `:substitute`, slashes (`/`) delimit search query, replace
-  value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`. This applies even if the regex flavor uses a different character for escaping (like the `%` in lua).
+  value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`.
 
 ## Current Limitations
 - Flags other than `g` flag are not supported.
@@ -80,7 +76,9 @@ The `:AltSubstitute` works mostly like `:substitute`.
 - Line breaks in the search or the replacement value are not supported.
 
 ## Add Support for more Regex Flavors
-The plugin has been specifically built with extensibility in mind. Adding more flavors basically requires bridging one search and one replace function. (Though a certain amount of escaping and performance considerations may be required.) If you want to add support for more languages, have a look this plugin's [regex module](./lua/alt-substitute/regex/), which includes the implementations for lua and glob patterns.
+PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors by only adding one search and one replace function. However, the bridging to other languages necessasitates some tricky escaping and performance optimization. 
+
+Have a look this plugin's [regex module](./lua/alt-substitute/regex.lua) to see want needs to be implemented.
 
 ## Other Search-and-Replace Plugins
 - [nvim-spectre](https://github.com/windwp/nvim-spectre)

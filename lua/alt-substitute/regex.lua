@@ -10,8 +10,12 @@ local M = {}
 ---@return integer **one-based** startPos of match, nil if no match
 ---@return integer **one-based** endPos of match, nil if no match
 function M.find(str, toSearch, fromIdx, language)
-	local flavor = require("alt-substitute.regex." .. language)
-	local startPos, endPos = flavor.find(str, toSearch, fromIdx)
+	local startPos, endPos
+
+	if language == "lua" then
+		startPos, endPos = str:find(toSearch, fromIdx)
+	end
+
 	return startPos, endPos
 end
 
@@ -23,17 +27,20 @@ end
 ---nil will perform all replacements
 ---@param language string
 ---@nodiscard
----@return string[] outputLines
+---@return string[] output as array of lines
 ---@return integer total number of replacements made (for notification)
 function M.replace(inputLines, toSearch, toReplace, numOfReplacements, language)
 	local outputLines = {}
 	local totalReplCount = 0
-	local flavor = require("alt-substitute.regex." .. language)
-	for _, line in pairs(inputLines) do
-		local newLine, numOfReplMade = flavor.replace(line, toSearch, toReplace, numOfReplacements)
-		totalReplCount = totalReplCount + numOfReplMade
-		table.insert(outputLines, newLine)
+
+	if language == "lua" then
+		for _, line in pairs(inputLines) do
+			local newLine, numOfReplMade = line:gsub(toSearch, toReplace, numOfReplacements)
+			totalReplCount = totalReplCount + numOfReplMade
+			table.insert(outputLines, newLine)
+		end
 	end
+
 	return outputLines, totalReplCount
 end
 
