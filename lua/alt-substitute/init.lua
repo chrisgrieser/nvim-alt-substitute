@@ -8,66 +8,6 @@ local parameters = require("alt-substitute.process-parameters")
 
 --------------------------------------------------------------------------------
 
----more complicated than just running gsub on each line, since the shift in
----length needs to be determined for each substitution, for the preview highlight
----@param opts table
----@param ns integer namespace id to use for highlights
----@param curBufNum integer buffer id
-local function previewAndHighlightReplacements(opts, ns, curBufNum)
-	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
-	if not toReplace then return end
-
-	-- PREVIEW CHANGES
-	local newBufferLines = regex.replace(bufferLines, toSearch, toReplace, nil, flags, regexFlavor)
-	vim.api.nvim_buf_set_lines(curBufNum, line1 - 1, line2, false, newBufferLines)
-
-	-- ADD HIGHLIGHTS
-	-- iterate lines in range
-	for i, line in ipairs(bufferLines) do
-		local lineIdx = line1 + i - 2
-
-		-- find all matches in the line
-		local startPositions = {}
-		local start = 0
-		while true do
-			start, _ = regex.find(line, toSearch, start + 1, flags, regexFlavor)
-			if not start then break end -- no more matches found
-			table.insert(startPositions, start)
-			if not (flags:find("g")) then break end
-		end
-
-		-- iterate matches
-		local previousShift = 0
-		for ii, startPos in ipairs(startPositions) do
-			local _, endPos = regex.find(line, toSearch, startPos, flags, regexFlavor)
-			local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, flags, regexFlavor))[1]
-			local diff = (#lineWithSomeSubs - #line)
-			startPos = startPos + previousShift
-			endPos = endPos + diff
-			previousShift = diff 
-
-			vim.api.nvim_buf_add_highlight(curBufNum, ns, hlgroup, lineIdx, startPos - 1, endPos)
-		end
-	end
-end
-
----@param opts table
----@param ns integer namespace id to use for highlights
----@param curBufNum integer buffer id
-local function highlightSearches(opts, ns, curBufNum)
-	local line1, _, bufferLines, toSearch, _, flags = parameters.process(opts, curBufNum)
-	for i, line in ipairs(bufferLines) do
-		-- only highlighting first match, since the g-flag can only be entered
-		-- when there is a substitution value
-		local startPos, endPos = regex.find(line, toSearch, 1, flags, regexFlavor)
-		if startPos then
-			vim.api.nvim_buf_add_highlight(0, ns, hlgroup, line1 + i - 2, startPos - 1, endPos)
-		end
-	end
-end
-
---------------------------------------------------------------------------------
-
 ---the substitution to perform when the commandline is confirmed with <CR>
 ---@param opts table
 local function confirmSubstitution(opts)
@@ -94,19 +34,51 @@ end
 ---@return integer? -- value of preview type
 local function previewSubstitution(opts, ns, preview_buf)
 	if preview_buf then
-		-- stylua: ignore
-		vim.notify_once("'inccommand=split' is not supported. Please use 'inccommand=unsplit' instead.", warn)
+		vim.notify_once("'inccommand=split' is not supported. Please use 'inccommand=unsplit'.", warn)
 		return
 	end
 	local curBufNum = vim.api.nvim_get_current_buf()
+	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 
-	local params = parameters.splitByUnescapedSlash(opts.args)
-	local toReplace = params[2]
+	-- PREVIEW CHANGES
+	if toReplace and toReplace ~= "" then
+		local newBufferLines = regex.replace(bufferLines, toSearch, toReplace, nil, flags, regexFlavor)
+		vim.api.nvim_buf_set_lines(curBufNum, line1 - 1, line2, false, newBufferLines)
+	end
 
-	if not toReplace or toReplace == "" then
-		highlightSearches(opts, ns, curBufNum)
-	else
-		previewAndHighlightReplacements(opts, ns, curBufNum)
+	-- ADD HIGHLIGHTS
+	-- iterate lines
+	for i, line in ipairs(bufferLines) do
+		local lineIdx = line1 + i - 2
+
+		-- search line for matches
+		local matchesInLine = {}
+		local startPos, endPos = 0, 0
+		while true do
+			startPos, endPos = regex.find(line, toSearch, startPos + 1, flags, regexFlavor)
+			if not startPos then break end -- no more matches found
+			table.insert(matchesInLine, { startPos = startPos, endPos = endPos })
+			if not (flags:find("g")) then break end -- only one iteration when no `g` flag
+		end
+
+		-- iterate matches
+		local previousShift = 0
+		for ii, m in ipairs(matchesInLine) do
+			-- if replacing, needs to recalculate the end position, also
+			-- considering shifts for multiple matches in a line
+			if toReplace and toReplace ~= "" then
+				_, m.endPos = regex.find(line, toSearch, m.startPos, flags, regexFlavor)
+				-- stylua: ignore
+				local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, flags, regexFlavor))[1]
+				local diff = (#lineWithSomeSubs - #line)
+				m.startPos = m.startPos + previousShift
+				m.endPos = m.endPos + diff
+				previousShift = diff
+			end
+
+			-- stylua: ignore
+			vim.api.nvim_buf_add_highlight(curBufNum, ns, hlgroup, lineIdx, m.startPos - 1, m.endPos)
+		end
 	end
 
 	return 2 -- return the value of the preview type
