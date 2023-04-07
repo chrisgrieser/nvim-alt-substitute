@@ -1,5 +1,5 @@
 # nvim-alt-substitute
-A substitute of vim's `:substitute` Ex-command that uses lua patterns instead of vim regex. Supports incremental preview and ranges.
+A substitute of vim's `:substitute` Ex-command that uses lua patterns instead of vim regex. Supports incremental preview.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -62,6 +62,9 @@ opts = {
 }
 ```
 
+__Appearance__  
+The incremental preview uses the same highlight group as `:substittue`, namely `Substitition`.
+
 ## Usage
 The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
@@ -85,6 +88,8 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
   casesensitive.
 - `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
+- Delimiters other than `/` are not supported yet. (You can make a PR to add
+  them, the relevant functions are in the [process-parameters module](./lua/alt-substitute/process-parameters.lua))
 
 ## Add Support for more Regex Flavors
 PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors by only adding one search and one replace function. However, the bridging to other languages necessasitates some tricky escaping and performance optimization. 
