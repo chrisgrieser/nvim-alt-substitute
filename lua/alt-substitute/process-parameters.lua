@@ -6,9 +6,11 @@ local M = {}
 ---@return string[]
 function M.splitByUnescapedSlash(str)
 	local splitStr = {}
-	local input = str .. "/" -- so the pattern also matches end of the str
 
-	for match in input:gmatch("(.-[^\\]?)/") do
+	-- so the pattern also matches end of the string
+	if not (vim.endswith(str, "/")) then str = str .. "/" end
+
+	for match in str:gmatch("(.-[^\\]?)/") do
 		match = match:gsub("\\/", "/")
 		table.insert(splitStr, match)	
 	end
