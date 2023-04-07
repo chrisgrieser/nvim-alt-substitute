@@ -43,8 +43,8 @@ local function previewAndHighlightReplacements(opts, ns, curBufNum)
 			local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, flags, regexFlavor))[1]
 			local diff = (#lineWithSomeSubs - #line)
 			startPos = startPos + previousShift
-			endPos = endPos + diff -- shift of end position due to replacement
-			previousShift = previousShift + diff -- remember shift for next iteration
+			endPos = endPos + diff
+			previousShift = diff 
 
 			vim.api.nvim_buf_add_highlight(curBufNum, ns, hlgroup, lineIdx, startPos - 1, endPos)
 		end
