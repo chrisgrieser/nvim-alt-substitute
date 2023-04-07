@@ -72,7 +72,7 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 - `g`: works the same as the `g` flag from `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
 - `f`: the search query and replace value are treated as __fixed strings__,
   meaning lua magic characters are treated as literal strings.
-- `i`: the search query is __case insensitive__. The `i` flag is ignored when the `f` flag is also used.
+- `i`: the search query is __case insensitive__. The `i` flag is ignored when the `f` flag is also used. (Also note that as opposed to `:substitute`, this plugin ignored the `ignorecase` and `smartcase` setting, so case sensitive is solely determined by whether this flag is present.)
 
 ### Ranges
 - Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). 
