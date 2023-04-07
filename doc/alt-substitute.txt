@@ -57,16 +57,18 @@ pattern `%f[set]` <https://www.lua.org/manual/5.4/manual.html#6.4.1>.
 FEATURES                         *alt-substitute-nvim-alt-substitute-features*
 
 
-- Use `:AltSubstitute` or the short form `:S` to do perform search-and-replace
-    operations, in lua patterns or javascript regex.
+- `:AltSubstitute` (short form `:S`) to perform search-and-replace
+    operations using lua patterns.
 - Incremental preview of the substitution.
-- Supports ranges
+- Supports ranges, using `%` by default.
 - The `g` flag is supported and works like with `:substitute`.
+- New flags: `i` for case-insensitive search and `f` for fixed (literal)
+    strings.
 
 >lua
     :%s /\(\w\+\)\d\+/\1/g          -- :substitute
     :S /(%w+)%d+/%1/g               -- nvim-alt-substitute 
-    deviceModel2020 -> deviceModel  -- result
+    deviceModel2020 -> deviceModel  -- effect
 <
 
 
@@ -100,15 +102,16 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
 
-The `:AltSubstitute` works mostly like `:substitute`.
+The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
 
 FLAGS ~
 
 
-- `g`works the same way as `:substitute`Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
-- `f`the search query and replace value are treated as **fixed** strings,
+- `g`works the same as the `g` flag from `:substitute`Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
+- `f`the search query and replace value are treated as **fixed strings**,
     meaning lua magic characters are treated as literal strings.
+- `i`the search query is **case insensitive**. The `i` flag is ignored when the `f` flag is also used.
 
 
 RANGES ~
