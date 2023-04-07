@@ -1,6 +1,7 @@
 local M = {}
 --------------------------------------------------------------------------------
 
+-- split by slashes ("/"), but ignore escaped slashes ("\/")
 ---@param str string string to split
 ---@return string[]
 function M.splitByUnescapedSlash(str)
@@ -28,18 +29,16 @@ end
 ---@return string[] buffer lines
 ---@return string term to search
 ---@return string|nil replacement
----@return boolean whether to search first or all occurrences in line
+---@return string flags
 function M.process(opts, curBufNum)
-	-- split by slashes ("/"), but ignore escaped slashes ("\/")
 	local params = M.splitByUnescapedSlash(opts.args)
-
-	local toSearch, toReplace, flags = params[1], params[2], params[3]
-	local singleRepl = (flags and flags:find("g")) == nil
+	local toSearch, toReplace = params[1], params[2]
+	local flags = params[3] or ""
 
 	local line1, line2 = opts.line1, opts.line2 -- range of the command
 	local bufferLines = vim.api.nvim_buf_get_lines(curBufNum, line1 - 1, line2, false)
 
-	return line1, line2, bufferLines, toSearch, toReplace, singleRepl
+	return line1, line2, bufferLines, toSearch, toReplace, flags
 end
 
 --------------------------------------------------------------------------------
