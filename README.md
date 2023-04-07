@@ -18,24 +18,21 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 
 ## Motivation
 <!-- vale Google.FirstPerson = NO -->
-Many people like me have only started (neo)vim after the introduction of lua of configuration language. While pretty much everything about neovim can be done with lua by now, search-and-replace-operations `:substitute` are one of few areas remaining where you still have to use vimscript. 
+Many people like me have only started using (neo)vim after the introduction of lua of configuration language. While almost everything about neovim can be done with lua by now, the search-and-replace via `:substitute` is one of few areas remaining where you still have to use vimscript. Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. 
 
-Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. So why not work with a regex flavor you are already familiar with? Command of lua patterns is certainly a more transferrable skill than mastering vim regex. Also, lua support comes basically for free without dependencies bundled with neovim already.
-
-While lua patterns are indeed lacking, compared to "real" regex, they do come with a few quite flexible items like [the balanced match `%bxy` or the frontier pattern[^1] `%f[set]`](https://www.lua.org/manual/5.4/manual.html#6.4.1). 
+So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well? While they are indeed lacking when compared to "real" regex, lua patterns do come with some quite handy items like the balanced match `%bxy` or the frontier pattern `%f[set]`.[^1] ([See the Lua Reference Manual on how to use them.](https://www.lua.org/manual/5.4/manual.html#6.4.1))
 
 ## Features
-- `:AltSubstitute` (short form `:S`) to perform search-and-replace
+- Use `:AltSubstitute` (short form `:S`) to perform search-and-replace
   operations using lua patterns.
 - Incremental preview of the substitution.
-- Supports ranges, using `%` by default.
+- Supports ranges, with `%` as default.
 - The `g` flag is supported and works like with `:substitute`. 
-- New flags: `i` for case-insensitive search and `f` for fixed (literal)
-  strings.
+- New flags: `i` for case-insensitive search and `f` for fixed strings (literal strings).
 
-```lua
+```text
 :%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S /(%w+)%d+/%1/g               -- nvim-alt-substitute 
+:S /(%w+)%d+/%1/g               -- :AltSubstitute
 deviceModel2020 -> deviceModel  -- effect
 ```
 
