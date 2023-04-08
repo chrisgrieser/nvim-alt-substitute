@@ -10,6 +10,13 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
+  - [Flags](#flags)
+  - [Ranges](#ranges)
+  - [Escaping](#escaping)
+- [Advanced Usage](#advanced-usage)
+  - [Lua Pattern Tricks](#lua-pattern-tricks)
+  - [Appearance](#appearance)
+  - [Command Line Completion](#command-line-completion)
 - [Current Limitations](#current-limitations)
 - [Add Support for more Regex Flavors](#add-support-for-more-regex-flavors)
 - [Other Search-and-Replace Plugins](#other-search-and-replace-plugins)
@@ -62,9 +69,6 @@ opts = {
 }
 ```
 
-__Appearance__  
-The incremental preview uses the same highlight group as `:substittue`, namely `Substitition`.
-
 ## Usage
 The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
@@ -81,6 +85,41 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 ### Escaping
 - Like with `:substitute`, slashes (`/`) delimit search query, replace
   value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`. 
+
+## Advanced Usage
+
+### Lua Pattern Tricks
+- `-` is lua's non-greedy quantifier. (`.-` is equivalent to `.*?` from
+  javascript regex.)
+- The frontier pattern`%f[set]`[^1] can be used as a replacement for `\b`:
+  `%f[%w]`
+- The balanced match `%bxy` can be used to deal with nested brackets.
+- [Read more about lua patterns in the lua reference manual](https://www.lua.org/manual/5.4/manual.html#6.4.1).
+
+### Appearance
+The incremental preview uses the same highlight group as `:substitute`, namely `Substitition`.
+
+### Command Line Completion
+You can use [cmp-cmdline-history](https://github.com/dmitmel/cmp-cmdline-history) to get suggestions of previous substitutions you made. If you find them not helpful, and do not want the suggestions to obfuscate your view of the buffer, then you can disable command suggestions for this plugin:
+
+```lua
+cmp.setup.cmdline(":", {
+	sources = { --[[ your sources ]]
+	},
+	enabled = function()
+		-- Set of commands where cmp will be disabled
+		local disabled = {
+			AltSubstitute = true,
+			S = true,
+		}
+		-- Get first word of cmdline
+		local cmd = vim.fn.getcmdline():match("%S+")
+		-- Return true if cmd isn't disabled
+		-- else call/return cmp.close(), which returns false
+		return not disabled[cmd] or cmp.close()
+	end,
+})
+```
 
 ## Current Limitations
 - `:substitution` flags other than `g` are not supported.
