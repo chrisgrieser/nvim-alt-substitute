@@ -1,4 +1,4 @@
-*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 07
+*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 08
 
 ==============================================================================
 Table of Contents                           *alt-substitute-table-of-contents*
@@ -9,6 +9,7 @@ Table of Contents                           *alt-substitute-table-of-contents*
   - Installation             |alt-substitute-nvim-alt-substitute-installation|
   - Configuration           |alt-substitute-nvim-alt-substitute-configuration|
   - Usage                           |alt-substitute-nvim-alt-substitute-usage|
+  - Advanced Usage         |alt-substitute-nvim-alt-substitute-advanced-usage|
   - Current Limitations|alt-substitute-nvim-alt-substitute-current-limitations|
   - Add Support for more Regex Flavors|alt-substitute-nvim-alt-substitute-add-support-for-more-regex-flavors|
   - Other Search-and-Replace Plugins|alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins|
@@ -29,6 +30,13 @@ be able to make search-and-replace operations in your editor.
 - |alt-substitute-installation|
 - |alt-substitute-configuration|
 - |alt-substitute-usage|
+    - |alt-substitute-flags|
+    - |alt-substitute-ranges|
+    - |alt-substitute-escaping|
+- |alt-substitute-advanced-usage|
+    - |alt-substitute-lua-pattern-tricks|
+    - |alt-substitute-appearance|
+    - |alt-substitute-command-line-completion|
 - |alt-substitute-current-limitations|
 - |alt-substitute-add-support-for-more-regex-flavors|
 - |alt-substitute-other-search-and-replace-plugins|
@@ -96,9 +104,6 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
     }
 <
 
-**Appearance** The incremental preview uses the same highlight group as
-`:substittue`, namely `Substitition`.
-
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
 
@@ -126,6 +131,54 @@ ESCAPING ~
 
 - Like with `:substitute`, slashes (`/`) delimit search query, replace
     value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`.
+
+
+ADVANCED USAGE             *alt-substitute-nvim-alt-substitute-advanced-usage*
+
+
+LUA PATTERN TRICKS ~
+
+
+- `-` is lua’s non-greedy quantifier. (`.-` is equivalent to `.?` from
+    javascript regex.)
+- The frontier pattern`%f[set]` can be used as a replacement for `\b`
+    `%f[%w]`
+- Thebalanced match `%bxy` can be used to deal with nested brackets.
+- Read more about lua patterns in the lua reference manual <https://www.lua.org/manual/5.4/manual.html#6.4.1>.
+
+
+APPEARANCE ~
+
+The incremental preview uses the same highlight group as `:substitute`, namely
+`Substitition`.
+
+
+COMMAND LINE COMPLETION ~
+
+You can use cmp-cmdline-history
+<https://github.com/dmitmel/cmp-cmdline-history> to get suggestions of previous
+substitutions you made. If you find them not helpful, and do not want the
+suggestions to obfuscate your view of the buffer, then you can disable command
+suggestions for this plugin:
+
+>lua
+    cmp.setup.cmdline(":", {
+        sources = { --[[ your sources ]]
+        },
+        enabled = function()
+            -- Set of commands where cmp will be disabled
+            local disabled = {
+                AltSubstitute = true,
+                S = true,
+            }
+            -- Get first word of cmdline
+            local cmd = vim.fn.getcmdline():match("%S+")
+            -- Return true if cmd isn't disabled
+            -- else call/return cmp.close(), which returns false
+            return not disabled[cmd] or cmp.close()
+        end,
+    })
+<
 
 
 CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
