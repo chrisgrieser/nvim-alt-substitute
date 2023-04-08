@@ -98,7 +98,7 @@ function M.setup(opts)
 	showNotification = opts.showNotification or true
 
 	-- setup user commands
-	local commands = { "S", "AltSubstition" }
+	local commands = { "S", "AltSubstitute" }
 	for _, cmd in pairs(commands) do
 		vim.api.nvim_create_user_command(cmd, confirmSubstitution, {
 			nargs = "?",
