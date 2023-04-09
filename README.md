@@ -69,6 +69,18 @@ opts = {
 }
 ```
 
+The plugin uses ex-commands and comes without keymaps. You can set some of your own though. (Remember *not* to add `<CR>` at the end.)
+
+```lua
+-- prefill commandline with Substitution Syntax
+vim.keymap.set({ "n", "x" }, "<leader>s", [[:S ///g<Left><Left><Left>]], { desc = "󱗘 :AltSubstitute" })
+
+-- alternative: prefile commandline with word under cursor
+vim.keymap.set({ "n", "x" }, "<leader>s", function()
+	return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
+end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
+```
+
 ## Usage
 The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
@@ -120,6 +132,9 @@ cmp.setup.cmdline(":", {
 	end,
 })
 ```
+
+### Interactive Lua Pattern Evaluation
+This was completely unintended, but I found this plugin's incremental preview to also be also useful for interactive testing of lua patterns. Without a replacement value, the plugin evaluates `string.find()` and with a replacement value, it evaluates `string.gsub()`.
 
 ## Current Limitations
 - `:substitution` flags other than `g` are not supported.
