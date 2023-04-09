@@ -18,7 +18,7 @@ Table of Contents                           *alt-substitute-table-of-contents*
 ==============================================================================
 1. nvim-alt-substitute                    *alt-substitute-nvim-alt-substitute*
 
-A substitute of vim’s `:substitute` Ex-command that uses lua patterns instead
+A substitute of vim’s `:substitute` ex-command that uses lua patterns instead
 of vim regex. Supports incremental preview.
 
 Since you really don’t want to learn a whole new flavor of regex, _just_ to
@@ -95,6 +95,9 @@ INSTALLATION                 *alt-substitute-nvim-alt-substitute-installation*
     }
 <
 
+
+  **Note** This plugin requires at least **nvim 0.8**, which introduced the
+  incremental command preview feature.
 
 CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
 
