@@ -49,8 +49,9 @@ deviceModel2020 -> deviceModel  -- effect
 -- lazy.nvim
 {
 	"chrisgrieser/nvim-alt-substitute",
-	cmd = {"S", "AltSubstitute"},
-	opts = true,
+  opts = true,
+  -- lazy-loading with `cmd =` does not work with incremental preview
+  event = "CmdlineEnter",
 },
 
 -- packer
