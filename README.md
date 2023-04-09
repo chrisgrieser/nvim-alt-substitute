@@ -1,5 +1,5 @@
 # nvim-alt-substitute
-A substitute of vim's `:substitute` Ex-command that uses lua patterns instead of vim regex. Supports incremental preview.
+A substitute of vim's `:substitute` ex-command that uses lua patterns instead of vim regex. Supports incremental preview.
 
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
@@ -60,6 +60,10 @@ use {
 	config = function() require("alt-substitute").setup({}) end,
 }
 ```
+
+> __Note__  
+> This plugin requires at least __nvim 0.8__, which introduced the incremental
+> command preview feature.
 
 ## Configuration
 
