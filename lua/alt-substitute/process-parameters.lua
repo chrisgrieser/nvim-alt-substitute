@@ -9,10 +9,19 @@ function M.splitByUnescapedSlash(str)
 
 	-- so the pattern also matches end of the string
 	if not (vim.endswith(str, "/")) then str = str .. "/" end
+	-- remove leading slash
+	if vim.startswith(str, "/") then str = str:sub(2) end
 
-	for match in str:gmatch("(.-[^\\]?)/") do
-		match = match:gsub("\\/", "/")
-		table.insert(splitStr, match)	
+	-- splitting
+	for match in str:gmatch("(.-)/") do
+		-- if previous match ends with backslash, append this match to it instead
+		-- aof adding it as the next match
+		local prevMatch = splitStr[#splitStr] or ""
+		if vim.endswith(prevMatch, "\\") then
+			splitStr[#splitStr] = prevMatch:sub(1, -2) .. "/" .. match
+		else
+			table.insert(splitStr, match)	
+		end
 	end
 
 	-- trim the array from empty strings at start and end
