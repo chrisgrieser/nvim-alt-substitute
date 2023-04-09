@@ -1,4 +1,4 @@
-*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 08
+*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 09
 
 ==============================================================================
 Table of Contents                           *alt-substitute-table-of-contents*
@@ -104,6 +104,19 @@ CONFIGURATION               *alt-substitute-nvim-alt-substitute-configuration*
     }
 <
 
+The plugin uses ex-commands and comes without keymaps. You can set some of your
+own though. (Remember _not_ to add `<CR>` at the end.)
+
+>lua
+    -- prefill commandline with Substitution Syntax
+    vim.keymap.set({ "n", "x" }, "<leader>s", [[:S ///g<Left><Left><Left>]], { desc = "󱗘 :AltSubstitute" })
+    
+    -- alternative: prefile commandline with word under cursor
+    vim.keymap.set({ "n", "x" }, "<leader>s", function()
+        return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
+    end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
+<
+
 
 USAGE                               *alt-substitute-nvim-alt-substitute-usage*
 
@@ -179,6 +192,14 @@ suggestions for this plugin:
         end,
     })
 <
+
+
+INTERACTIVE LUA PATTERN EVALUATION ~
+
+This was completely unintended, but I found this plugin’s incremental preview
+to also be also useful for interactive testing of lua patterns. Without a
+replacement value, the plugin evaluates `string.find()` and with a replacement
+value, it evaluates `string.gsub()`.
 
 
 CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
