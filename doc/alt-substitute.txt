@@ -83,8 +83,9 @@ INSTALLATION                 *alt-substitute-nvim-alt-substitute-installation*
     -- lazy.nvim
     {
         "chrisgrieser/nvim-alt-substitute",
-        cmd = {"S", "AltSubstitute"},
-        opts = true,
+      opts = true,
+      -- lazy-loading with `cmd =` does not work with incremental preview
+      event = "CmdlineEnter",
     },
     
     -- packer
