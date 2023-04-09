@@ -3,8 +3,8 @@ local warn = vim.log.levels.WARN
 local hlgroup = "Substitute"
 local regexFlavor, showNotification
 
-local regex = require("alt-substitute.regex")
 local parameters = require("alt-substitute.process-parameters")
+local regex = require("alt-substitute.regex")
 
 --------------------------------------------------------------------------------
 
