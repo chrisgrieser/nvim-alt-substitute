@@ -74,10 +74,9 @@ local function previewSubstitution(opts, ns, _)
 		-- iterate matches
 		local previousShift = 0
 		for ii, m in ipairs(matchesInLine) do
-			-- if replacing, needs to recalculate the end position, also
-			-- considering shifts for multiple matches in a line
+			-- if replacing, needs to consider shift in positins from previous
+			-- matches in the same line
 			if toReplace and toReplace ~= "" then
-				_, m.endPos = regex.find(line, toSearch, m.startPos, flags, regexFlavor)
 				-- stylua: ignore
 				local lineWithSomeSubs = (regex.replace({ line }, toSearch, toReplace, ii, flags, regexFlavor))[1]
 				local diff = (#lineWithSomeSubs - #line)
