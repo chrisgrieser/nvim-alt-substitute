@@ -25,4 +25,10 @@ describe("parameter processing: ", function()
 		assert.same({"foo", "bar"}, params)
 	end)
 
+	it("only flags", function()
+		local input = [[///g]]
+		local params = parameters.splitByUnescapedSlash(input)
+		assert.same({"", "", "g"}, params)
+	end)
+
 end)

@@ -24,10 +24,6 @@ function M.splitByUnescapedSlash(str)
 		end
 	end
 
-	-- trim the array from empty strings at start and end
-	if splitStr[1] == "" then table.remove(splitStr, 1) end	
-	if splitStr[#splitStr] == "" then table.remove(splitStr) end	
-
 	return splitStr
 end
 

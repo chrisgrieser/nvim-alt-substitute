@@ -23,6 +23,9 @@ local function confirmSubstitution(opts)
 		-- stylua: ignore
 		vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
 		return
+	elseif toSearch == "" then
+		vim.notify('Search string is empty.', warn)
+		return
 	end
 	if invalidFlagsUsed then
 		vim.notify(('"%s" contains invalid flags, the only valid flags are "%s".\nInvalid flags have been ignored.'):format(flags, validFlags), warn)
@@ -48,6 +51,8 @@ local function previewSubstitution(opts, ns, preview_buf)
 	end
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
+
+	if toSearch == "" and toReplace == "" then return end -- flag only leads to errors
 
 	-- PREVIEW CHANGES
 	if toReplace and toReplace ~= "" then
