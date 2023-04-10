@@ -14,7 +14,7 @@ local function confirmSubstitution(opts)
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 	local validFlags = "gfi"
-	local invalidFlagsUsed = flags:find("[^"..validFlags.."]")
+	local invalidFlagsUsed = flags:find("[^" .. validFlags .. "]")
 
 	if not toReplace then
 		vim.notify("No replacement value given, cannot perform substitution.", warn)
@@ -24,10 +24,11 @@ local function confirmSubstitution(opts)
 		vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
 		return
 	elseif toSearch == "" then
-		vim.notify('Search string is empty.', warn)
+		vim.notify("Search string is empty.", warn)
 		return
 	end
 	if invalidFlagsUsed then
+		-- stylua: ignore
 		vim.notify(('"%s" contains invalid flags, the only valid flags are "%s".\nInvalid flags have been ignored.'):format(flags, validFlags), warn)
 	end
 
@@ -42,13 +43,13 @@ end
 -- https://neovim.io/doc/user/map.html#%3Acommand-preview
 ---@param opts table
 ---@param ns number namespace for the highlight
----@param _ any unused, passed if inccommand=split
----@return integer? -- value of preview type
+---@param _ any unused, is bufnr if inccommand=split
+---@return 0|1|2 -- no preview|nosplit|split/nosplit
 local function previewSubstitution(opts, ns, _)
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 
-	if toSearch == "" and toReplace == "" then return end -- flag only leads to errors
+	if toSearch == "" then return 0 end -- without search value, there will be no useful preview
 
 	-- PREVIEW CHANGES
 	if toReplace and toReplace ~= "" then
@@ -74,7 +75,7 @@ local function previewSubstitution(opts, ns, _)
 		-- iterate matches
 		local previousShift = 0
 		for ii, m in ipairs(matchesInLine) do
-			-- if replacing, needs to consider shift in positins from previous
+			-- if replacing, needs to consider shift in positions from previous
 			-- matches in the same line
 			if toReplace and toReplace ~= "" then
 				-- stylua: ignore
@@ -85,7 +86,6 @@ local function previewSubstitution(opts, ns, _)
 				previousShift = diff
 			end
 
-			-- stylua: ignore
 			vim.api.nvim_buf_add_highlight(curBufNum, ns, hlgroup, lineIdx, m.startPos - 1, m.endPos)
 		end
 	end
