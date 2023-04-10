@@ -42,13 +42,9 @@ end
 -- https://neovim.io/doc/user/map.html#%3Acommand-preview
 ---@param opts table
 ---@param ns number namespace for the highlight
----@param preview_buf boolean true if inccommand=split. (Not implemented yet.)
+---@param _ any unused, passed if inccommand=split
 ---@return integer? -- value of preview type
-local function previewSubstitution(opts, ns, preview_buf)
-	if preview_buf then
-		vim.notify_once("'inccommand=split' is not supported. Please use 'inccommand=unsplit'.", warn)
-		return
-	end
+local function previewSubstitution(opts, ns, _)
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 
@@ -69,7 +65,7 @@ local function previewSubstitution(opts, ns, preview_buf)
 		local matchesInLine = {}
 		local startPos, endPos = 0, 0
 		while true do
-			startPos, endPos = regex.find(line, toSearch, startPos + 1, flags, regexFlavor)
+			startPos, endPos = regex.find(line, toSearch, endPos + 1, flags, regexFlavor)
 			if not startPos then break end -- no more matches found
 			table.insert(matchesInLine, { startPos = startPos, endPos = endPos })
 			if not (flags:find("g")) then break end -- only one iteration when no `g` flag
@@ -95,7 +91,7 @@ local function previewSubstitution(opts, ns, preview_buf)
 		end
 	end
 
-	return 2 -- return the value of the preview type
+	return 1 -- 1 = always act as if inccommand=unsplit
 end
 
 --------------------------------------------------------------------------------
