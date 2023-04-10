@@ -17,6 +17,10 @@ local function confirmSubstitution(opts)
 	if not toReplace then
 		vim.notify("No replacement value given, cannot perform substitution.", warn)
 		return
+	elseif toReplace:find("%%$") then
+		-- stylua: ignore
+		vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
+		return
 	end
 
 	local newBufferLines, totalReplacementCount =
