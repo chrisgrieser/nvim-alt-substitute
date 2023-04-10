@@ -8,18 +8,17 @@ local hlgroup = "Substitute"
 
 --------------------------------------------------------------------------------
 ---@param bufferLines string[]
----@param startLine number
 ---@param toSearch string lua pattern to search for
 ---@param toReplace string|nil nil means no highlight, will only get search position
 ---@param flags string
 ---@param regexFlavor string currently only lua
+---@nodiscard
 ---@return table[] hlPositions
-local function calculateHighlightPositions(bufferLines, startLine, toSearch, toReplace, flags, regexFlavor)
+function M.calcHighlPos(bufferLines, toSearch, toReplace, flags, regexFlavor)
 	local hlPositions = {}
 
 	-- iterate lines
 	for i, line in ipairs(bufferLines) do
-		local lineIdx = startLine + i - 2
 
 		-- search line for matches
 		local matchesInLine = {}
@@ -45,7 +44,7 @@ local function calculateHighlightPositions(bufferLines, startLine, toSearch, toR
 				previousShift = diff
 			end
 		end
-		hlPositions[lineIdx] = matchesInLine
+		hlPositions[i] = matchesInLine
 	end
 	return hlPositions
 end
@@ -53,6 +52,7 @@ end
 -- https://neovim.io/doc/user/map.html#%3Acommand-preview
 ---@param opts table
 ---@param ns number namespace for the highlight
+---@nodiscard
 ---@return 0|1|2 -- no preview|nosplit|split/nosplit
 function M.preview(opts, ns, regexFlavor)
 	local curBufNum = vim.api.nvim_get_current_buf()
@@ -68,8 +68,9 @@ function M.preview(opts, ns, regexFlavor)
 	end
 
 	-- draw the highlights
-	local hlPositions = calculateHighlightPositions(bufferLines, line1, toSearch, toReplace, flags, regexFlavor)
-	for lineIdx, matchesInLine in pairs(hlPositions) do
+	local hlPositions = M.calcHighlPos(bufferLines, toSearch, toReplace, flags, regexFlavor)
+	for lnum, matchesInLine in pairs(hlPositions) do
+		local lineIdx = line1 + lnum - 2 -- line from analyzed text to line idx in buffer
 		for _, m in pairs(matchesInLine) do
 			vim.api.nvim_buf_add_highlight(curBufNum, ns, hlgroup, lineIdx, m.startPos - 1, m.endPos)
 		end
