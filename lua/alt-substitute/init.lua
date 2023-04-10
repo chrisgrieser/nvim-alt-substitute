@@ -13,6 +13,8 @@ local regex = require("alt-substitute.regex")
 local function confirmSubstitution(opts)
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
+	local validFlags = "gfi"
+	local invalidFlagsUsed = flags:find("[^"..validFlags.."]")
 
 	if not toReplace then
 		vim.notify("No replacement value given, cannot perform substitution.", warn)
@@ -21,6 +23,9 @@ local function confirmSubstitution(opts)
 		-- stylua: ignore
 		vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
 		return
+	end
+	if invalidFlagsUsed then
+		vim.notify(('"%s" contains invalid flags, the only valid flags are "%s".\nInvalid flags have been ignored.'):format(flags, validFlags), warn)
 	end
 
 	local newBufferLines, totalReplacementCount =
