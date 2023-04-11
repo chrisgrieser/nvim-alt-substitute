@@ -29,9 +29,9 @@ https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-
 
 ## Motivation
 <!-- vale Google.FirstPerson = NO -->
-Many people like me have only started using (neo)vim after the introduction of lua of configuration language. While almost everything about neovim can be done with lua by now, the search-and-replace via `:substitute` is one of few areas remaining where you still have to use vimscript. Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. 
+Many people like me have only started using nvim after the introduction of lua as configuration language. While almost everything about neovim can be done with lua by now, search-and-replace via `:substitute` is one of few areas remaining where you still have to use vimscript. Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. 
 
-So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well? While they are indeed lacking when compared to "real" regex, lua patterns do come with some quite handy items like the balanced match `%bxy` or the frontier pattern `%f[set]`.[^1] ([See the Lua Reference Manual on how to use them.](https://www.lua.org/manual/5.4/manual.html#6.4.1))
+So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well? While they are indeed lacking some features when compared to "real" regex, lua patterns do come with some quite handy items like the balanced match `%bxy` or the frontier pattern `%f[set]`.[^1] ([See the Lua Reference Manual on how to use them.](https://www.lua.org/manual/5.4/manual.html#6.4.1))
 
 ## Features
 - Use `:AltSubstitute` (short form `:S`) to perform search-and-replace
