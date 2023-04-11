@@ -62,6 +62,10 @@ come with some quite handy items like the balanced match `%bxy` or the frontier
 pattern `%f[set]`. (See the Lua Reference Manual on how to use them.
 <https://www.lua.org/manual/5.4/manual.html#6.4.1>)
 
+For people already well-versed in vim regex, this plugin is indeed of little
+use, but for newcomers it may lower the barrier by removing the need to learn
+yet another regex flavor.
+
 
 FEATURES                         *alt-substitute-nvim-alt-substitute-features*
 
