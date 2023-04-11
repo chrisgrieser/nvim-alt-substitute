@@ -6,7 +6,7 @@ Since you really don't want to learn a whole new flavor of regex, *just* to be a
 
 https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-9c57-031ae13fc268.mp4
 
-<small>Colorscheme: dawnfox variant of nightfox.nvim </small>
+*Colorscheme: dawnfox variant of nightfox.nvim*
 
 <!--toc:start-->
 - [Motivation](#motivation)
