@@ -1,8 +1,6 @@
 # nvim-alt-substitute
-A substitute of vim's `:substitute` ex-command that uses lua patterns instead of vim regex. Supports incremental preview.
-
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
-Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
+A substitute of vim's `:substitute` that uses lua patterns instead of vim regex. Since you really don't want to learn a whole new flavor of regex just to be able to make search-and-replace operations in your editor.
 
 https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-9c57-031ae13fc268.mp4
 
