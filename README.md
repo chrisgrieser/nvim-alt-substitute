@@ -40,8 +40,8 @@ So for those of us who have never used neovim with anything other than lua, why 
 - New flags: `i` for case-insensitive search and `f` for fixed strings (literal strings).
 
 ```text
-:%s /\(\w\+\)\d\+/\1/g          -- :substitute
-:S /(%w+)%d+/%1/g               -- :AltSubstitute
+:%s /\(\a\+\)\d\+/\1/g          -- :substitute
+:S /(%a+)%d+/%1/g               -- :AltSubstitute
 deviceModel2020 -> deviceModel  -- effect
 ```
 
