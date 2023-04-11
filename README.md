@@ -31,6 +31,8 @@ Many people like me have only started using nvim after the introduction of lua a
 
 So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well? While they are indeed lacking some features when compared to "real" regex, lua patterns do come with some quite handy items like the balanced match `%bxy` or the frontier pattern `%f[set]`.[^1] ([See the Lua Reference Manual on how to use them.](https://www.lua.org/manual/5.4/manual.html#6.4.1))
 
+For people already well-versed in vim regex, this plugin is indeed of little use, but for newcomers it may lower the barrier by removing the need to learn yet another regex flavor.
+
 ## Features
 - Use `:AltSubstitute` (short form `:S`) to perform search-and-replace
   operations using lua patterns.
