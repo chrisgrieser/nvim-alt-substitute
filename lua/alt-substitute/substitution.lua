@@ -7,6 +7,7 @@ local warn = vim.log.levels.WARN
 local hlgroup = "Substitute"
 
 --------------------------------------------------------------------------------
+
 ---@param bufferLines string[]
 ---@param toSearch string lua pattern to search for
 ---@param toReplace string|nil nil means no highlight, will only get search position
@@ -19,7 +20,6 @@ function M.calcHighlPos(bufferLines, toSearch, toReplace, flags, regexFlavor)
 
 	-- iterate lines
 	for i, line in ipairs(bufferLines) do
-
 		-- search line for matches
 		local matchesInLine = {}
 		local startPos, endPos = 0, 0
@@ -59,7 +59,8 @@ function M.preview(opts, ns, regexFlavor)
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 
 	-- without search value, there will be no useful preview
-	if toSearch == "" then return 0 end 
+	local invalidPattern = toSearch:find("%%$") and regexFlavor == "lua" and not (flags:find("f"))
+	if toSearch == "" or invalidPattern then return 0 end
 
 	-- preview changes
 	if toReplace and toReplace ~= "" then
@@ -88,16 +89,23 @@ function M.confirm(opts, showNotification, regexFlavor)
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 	local validFlags = "gfi"
 	local invalidFlagsUsed = flags:find("[^" .. validFlags .. "]")
+	local invalidPattern = (toReplace:find("%%$") or toSearch:find("%%$"))
+		and regexFlavor == "lua"
+		and not (flags:find("f"))
 
 	if not toReplace then
 		vim.notify("No replacement value given, cannot perform substitution.", warn)
 		return
-	elseif toReplace:find("%%$") then
-		-- stylua: ignore
-		vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
-		return
 	elseif toSearch == "" then
 		vim.notify("Search string is empty.", warn)
+		return
+	elseif invalidPattern then
+		-- stylua: ignore
+		if regexFlavor == "lua" then
+			vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
+		else
+			vim.notify('Invalid pattern used.', warn)
+		end
 		return
 	end
 	if invalidFlagsUsed then
