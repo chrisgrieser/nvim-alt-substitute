@@ -4,6 +4,8 @@ A substitute of vim's `:substitute` ex-command that uses lua patterns instead of
 <!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
 Since you really don't want to learn a whole new flavor of regex, *just* to be able to make search-and-replace operations in your editor.
 
+https://user-images.githubusercontent.com/73286100/231132984-d49b3a76-c681-43c8-99a6-131cd0c0731d.mp4
+
 <!--toc:start-->
 - [Motivation](#motivation)
 - [Features](#features)
