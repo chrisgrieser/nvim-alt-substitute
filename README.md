@@ -143,21 +143,20 @@ cmp.setup.cmdline(":", {
 ```
 
 ### Interactive Lua Pattern Evaluation
-This was completely unintended, but I found this plugin's incremental preview to also be also useful for interactive testing of lua patterns. Without a replacement value, the plugin evaluates `string.find()` and with a replacement value, it evaluates `string.gsub()`.
+While unintended,  I found this plugin's incremental preview to also be very useful for interactive testing of lua patterns. Without a replacement value, the plugin evaluates `string.find()` and with a replacement value, it evaluates `string.gsub()`.
 
 ## Current Limitations
 - `:substitution` flags other than `g` are not supported.
-- The `ignorecase` and the `smartcase` option are ignored, the search is always
-  casesensitive.
+- The `ignorecase` and the `smartcase` option are ignored, instead case sensitivity is termined by the presence or absense of the `i` flag.
 - `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
 - Delimiters other than `/` are not supported yet. (You can make a PR to add
   them, the relevant functions are in the [process-parameters module](./lua/alt-substitute/process-parameters.lua))
 
 ## Add Support for more Regex Flavors
-PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors by only adding one search and one replace function. However, the bridging to other languages necessasitates some tricky escaping and performance optimization. 
+PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors by only adding one search and one replace function. However, the bridging to other languages necessitates some tricky escaping. Also performance was an issue in my brief attempts, since the incremental preview basically runs the substitution on every keystroke.
 
-Have a look this plugin's [regex module](./lua/alt-substitute/regex.lua) to see want needs to be implemented.
+Have a look this plugin's [regex module](./lua/alt-substitute/regex.lua) to see want needs to be implemented, if you wanna give it a try.
 
 ## Other Search-and-Replace Plugins
 - [nvim-spectre](https://github.com/windwp/nvim-spectre)
