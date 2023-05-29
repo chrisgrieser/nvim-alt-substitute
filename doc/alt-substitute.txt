@@ -1,4 +1,4 @@
-*alt-substitute.txt*         For NVIM v0.8.0        Last change: 2023 April 13
+*alt-substitute.txt*          For NVIM v0.8.0         Last change: 2023 May 29
 
 ==============================================================================
 Table of Contents                           *alt-substitute-table-of-contents*
@@ -27,7 +27,6 @@ https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-
 
 _Colorscheme: dawnfox variant of nightfox.nvim_
 
-
 - |alt-substitute-motivation|
 - |alt-substitute-features|
 - |alt-substitute-installation|
@@ -55,20 +54,23 @@ remaining where you still have to use vimscript. Regardless whether you like
 vimscript or not, learning vim’s flavor of regex _just_ for
 search-and-replace-operations feels somewhat unproductive.
 
-So for those of us who have never used neovim with anything other than lua, why
-not work with lua patterns for search-and-replace as well? While they are
-indeed lacking some features when compared to "real" regex, lua patterns do
-come with some quite handy items like the balanced match `%bxy` or the frontier
-pattern `%f[set]`. (See the Lua Reference Manual on how to use them.
-<https://www.lua.org/manual/5.4/manual.html#6.4.1>)
+Vim’s `:smagic` does help a bit, but still requires additional backslashes
+where common regex syntax does not require them. Using `verymagic` gets you
+closest to common regex, but requires rather convoluted syntax
+<https://stackoverflow.com/questions/3760444/in-vim-is-there-a-way-to-set-very-magic-permanently-and-globally/23021259#23021259>
+that can make the command line hard to read in my view. And even if using
+`magic` or `verymagic`, vim’s regex still differs from common regex syntax in
+various ways, like the the the way non-greedy quantifiers are written
+<https://vi.stackexchange.com/questions/196/how-to-make-regex-matchers-non-greedy>.
 
-For people already well-versed in vim regex, this plugin is indeed of little
-use, but for newcomers it may lower the barrier by removing the need to learn
-yet another regex flavor.
+So for those of us who have never used neovim with anything other than lua, why
+not work with lua patterns for search-and-replace as well to drop the need to
+learn yet another regex flavor? For people already well-versed in vim regex,
+this plugin is indeed of little use, but for newcomers it may lower the barrier
+by removing the need to learn yet another regex flavor.
 
 
 FEATURES                         *alt-substitute-nvim-alt-substitute-features*
-
 
 - Use `:AltSubstitute` (short form `:S`) to perform search-and-replace
     operations using lua patterns.
@@ -136,7 +138,6 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 
 FLAGS ~
 
-
 - `g`works the same as the `g` flag from `:substitute`Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
 - `f`the search query and replace value are treated as **fixed strings**,
     meaning lua magic characters are treated as literal strings.
@@ -145,13 +146,11 @@ FLAGS ~
 
 RANGES ~
 
-
 - Ranges are line-based and work |like all other vim command|.
 - However, as opposed to `:substitute`, `:AltSubstitute` works on the whole buffer when no range is given. (In other words, `%` is the default range.)
 
 
 ESCAPING ~
-
 
 - Like with `:substitute`, slashes (`/`) delimit search query, replace
     value, and flags. Therefore, to search for or replace a `/` you need to escape it with a backslash: `\/`.
@@ -161,7 +160,6 @@ ADVANCED USAGE             *alt-substitute-nvim-alt-substitute-advanced-usage*
 
 
 LUA PATTERN TRICKS ~
-
 
 - `-` is lua’s non-greedy quantifier. (`.-` is equivalent to `.?` from
     javascript regex.)
@@ -215,7 +213,6 @@ the plugin evaluates `string.find()` and with a replacement value, it evaluates
 
 CURRENT LIMITATIONS   *alt-substitute-nvim-alt-substitute-current-limitations*
 
-
 - `:substitution` flags other than `g` are not supported.
 - The `ignorecase` and the `smartcase` option are ignored, instead case sensitivity is termined by the presence or absense of the `i` flag.
 - `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
@@ -238,7 +235,6 @@ see want needs to be implemented, if you wanna give it a try.
 
 
 OTHER SEARCH-AND-REPLACE PLUGINS*alt-substitute-nvim-alt-substitute-other-search-and-replace-plugins*
-
 
 - nvim-spectre <https://github.com/windwp/nvim-spectre>
 - serch-replace.nvim <https://github.com/roobert/search-replace.nvim>
