@@ -84,10 +84,13 @@ The plugin uses ex-commands and comes without keymaps. You can set some of your 
 -- prefill commandline with Substitution Syntax
 vim.keymap.set({ "n", "x" }, "<leader>s", [[:S ///g<Left><Left><Left>]], { desc = "󱗘 :AltSubstitute" })
 
--- alternative: prefile commandline with word under cursor
-vim.keymap.set({ "n", "x" }, "<leader>s", function()
-	return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>"
-end, { desc = "󱗘 :AltSubstitute word under cursor", expr = true })
+-- prefill commandline with Substitution Syntax and word under cursor
+vim.keymap.set(
+	{ "n", "x" },
+	"<leader>S",
+	function() return ":S /" .. vim.fn.expand("<cword>") .. "//g<Left><Left>" end,
+	{ desc = "󱗘 :AltSubstitute (word under cursor)", expr = true }
+)
 ```
 
 ## Usage
@@ -97,7 +100,7 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 - `g`: works the same as the `g` flag from `:substitute`: Without the `g` flag, only the first match in a line is replaced. With it, every occurrence in a line is replaced.
 - `f`: the search query and replace value are treated as __fixed strings__,
   meaning lua magic characters are treated as literal strings.
-- `i`: the search query is __case insensitive__. The `i` flag is ignored when the `f` flag is also used. (Also note that as opposed to `:substitute`, this plugin ignored the `ignorecase` and `smartcase` setting, so case sensitive is solely determined by whether this flag is present.)
+- `i`: the search query is __case insensitive__. The `i` flag is ignored when the `f` flag is also used. (Also note that as opposed to `:substitute`, this plugin ignores the `ignorecase` and `smartcase` setting – case sensitivity is solely determined by whether this flag is present.)
 
 ### Ranges
 - Ranges are line-based and work [like all other vim command](https://neovim.io/doc/user/cmdline.html#cmdline-ranges). 
@@ -110,11 +113,9 @@ The plugin registers the Ex-commands `:AltSubstitue` and `:S` as short form.
 ## Advanced Usage
 
 ### Lua Pattern Tricks
-- `-` is lua's non-greedy quantifier. (`.-` is equivalent to `.*?` from
-  javascript regex.)
 - The frontier pattern`%f[set]`[^1] can be used as a replacement for `\b`:
   `%f[%w]`
-- The balanced match `%bxy` can be used to deal with nested brackets.
+- The balanced match `%bxy` can be used to deal conveniently with nested brackets.
 - [Read more about lua patterns in the lua reference manual](https://www.lua.org/manual/5.4/manual.html#6.4.1).
 
 ### Appearance
@@ -147,14 +148,14 @@ While unintended,  I found this plugin's incremental preview to also be very use
 
 ## Current Limitations
 - `:substitution` flags other than `g` are not supported.
-- The `ignorecase` and the `smartcase` option are ignored, instead case sensitivity is termined by the presence or absense of the `i` flag.
+- The `ignorecase` and the `smartcase` option are ignored. Instead, case sensitivity is termined by the presence or absense of the `i` flag.
 - `inccommand=split` is not supported, please use `inccommand=unsplit` instead.
 - Line breaks in the search or the replacement value are not supported.
 - Delimiters other than `/` are not supported yet. (You can make a PR to add
   them, the relevant functions are in the [process-parameters module](./lua/alt-substitute/process-parameters.lua))
 
 ## Add Support for more Regex Flavors
-PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors by only adding one search and one replace function. However, the bridging to other languages necessitates some tricky escaping. Also performance was an issue in my brief attempts, since the incremental preview basically runs the substitution on every keystroke.
+PRs adding support for more regex flavors, like for example javascript regex, are welcome. The plugin has been specifically built with extensibility in mind, so other regex flavors can be added by writing just one search function and one replace function. However, the bridging to other languages necessitates some tricky escaping. Also performance was an issue in my brief attempts, since the incremental preview basically runs the substitution on every keystroke.
 
 Have a look this plugin's [regex module](./lua/alt-substitute/regex.lua) to see want needs to be implemented, if you wanna give it a try.
 
