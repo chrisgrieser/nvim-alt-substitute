@@ -58,9 +58,11 @@ function M.preview(opts, ns, regexFlavor)
 	local curBufNum = vim.api.nvim_get_current_buf()
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 
-	-- without search value, there will be no useful preview
-	local invalidPattern = toSearch:find("%%$") and regexFlavor == "lua" and not (flags:find("f"))
-	if toSearch == "" or invalidPattern then return 0 end
+	-- invalid search patterns
+	local trailingPercent = toSearch:find("%%$") and regexFlavor == "lua" and not (flags:find("f"))
+	local emptySearch = toSearch == ""
+	local infiniteMatches = toSearch == ".-" and regexFlavor == "lua" and not (flags:find("f"))
+	if trailingPercent or emptySearch or infiniteMatches then return 0 end
 
 	-- preview changes
 	if toReplace and toReplace ~= "" then

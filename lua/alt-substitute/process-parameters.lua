@@ -39,7 +39,8 @@ end
 ---@return string flags
 function M.process(opts, curBufNum)
 	local params = M.splitByUnescapedSlash(opts.args)
-	local toSearch, toReplace = params[1], params[2]
+	local toSearch = params[1] or "" 
+	local toReplace = params[2] or ""
 	local flags = params[3] or ""
 
 	local line1, line2 = opts.line1, opts.line2 -- range of the command
