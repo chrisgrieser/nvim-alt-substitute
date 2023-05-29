@@ -79,7 +79,7 @@ function M.preview(opts, ns, regexFlavor)
 		end
 	end
 
-	return 1 -- 1 = always act as if inccommand=unsplit
+	return 1 -- 1 = always act as if `inccommand=unsplit`
 end
 
 ---the substitution to perform when the commandline is confirmed with <CR>
@@ -91,7 +91,8 @@ function M.confirm(opts, showNotification, regexFlavor)
 	local line1, line2, bufferLines, toSearch, toReplace, flags = parameters.process(opts, curBufNum)
 	local validFlags = "gfi"
 	local invalidFlagsUsed = flags:find("[^" .. validFlags .. "]")
-	local invalidPattern = (toReplace:find("%%$") or toSearch:find("%%$"))
+	---@diagnostic disable-next-line: need-check-nil - spurious diagnostic
+	local invalidPattern = (toReplace:find("%%$") or toSearch:find("%%$") or toSearch == ".-")
 		and regexFlavor == "lua"
 		and not (flags:find("f"))
 
@@ -102,12 +103,7 @@ function M.confirm(opts, showNotification, regexFlavor)
 		vim.notify("Search string is empty.", warn)
 		return
 	elseif invalidPattern then
-		-- stylua: ignore
-		if regexFlavor == "lua" then
-			vim.notify('A single "%" cannot be used as replacement value in lua patterns. \n(A literal "%" must be escaped as "%%".)', warn)
-		else
-			vim.notify('Invalid pattern used.', warn)
-		end
+		vim.notify('Invalid pattern used.', warn)
 		return
 	end
 	if invalidFlagsUsed then
