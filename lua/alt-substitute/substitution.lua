@@ -27,7 +27,8 @@ function M.calcHighlPos(bufferLines, toSearch, toReplace, flags, regexFlavor)
 			startPos, endPos = regex.find(line, toSearch, endPos + 1, flags, regexFlavor)
 			if not startPos then break end -- no more matches found
 			table.insert(matchesInLine, { startPos = startPos, endPos = endPos })
-			if not (flags:find("g")) then break end -- only one iteration when no `g` flag
+			-- only one iteration needed in these cases
+			if not (flags:find("g")) or toSearch:find("^^") or toSearch:find("$$") then break end
 		end
 
 		-- iterate matches
