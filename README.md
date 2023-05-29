@@ -29,9 +29,9 @@ https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-
 <!-- vale Google.FirstPerson = NO -->
 Many people like me have only started using nvim after the introduction of lua as configuration language. While almost everything about neovim can be done with lua by now, search-and-replace via `:substitute` is one of few areas remaining where you still have to use vimscript. Regardless whether you like vimscript or not, learning vim's flavor of regex *just* for search-and-replace-operations feels somewhat unproductive. 
 
-So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well? While they are indeed lacking some features when compared to "real" regex, lua patterns do come with some quite handy items like the balanced match `%bxy` or the frontier pattern `%f[set]`.[^1] ([See the Lua Reference Manual on how to use them.](https://www.lua.org/manual/5.4/manual.html#6.4.1))
+Vim's `:smagic` does help a bit, but still requires additional backslashes where common regex syntax does not require them. Using `verymagic` gets you closest to common regex, [but requires rather convoluted syntax](https://stackoverflow.com/questions/3760444/in-vim-is-there-a-way-to-set-very-magic-permanently-and-globally/23021259#23021259) that can make the command line hard to read in my view. And even if using `magic` or `verymagic`, vim's regex still differs from common regex syntax in various ways, [like the the the way non-greedy quantifiers are written](https://vi.stackexchange.com/questions/196/how-to-make-regex-matchers-non-greedy).
 
-For people already well-versed in vim regex, this plugin is indeed of little use, but for newcomers it may lower the barrier by removing the need to learn yet another regex flavor.
+So for those of us who have never used neovim with anything other than lua, why not work with lua patterns for search-and-replace as well to drop the need to learn yet another regex flavor? For people already well-versed in vim regex, this plugin is indeed of little use, but for newcomers it may lower the barrier by removing the need to learn yet another regex flavor.
 
 ## Features
 - Use `:AltSubstitute` (short form `:S`) to perform search-and-replace
