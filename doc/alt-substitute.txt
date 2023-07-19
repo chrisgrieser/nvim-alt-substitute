@@ -1,4 +1,4 @@
-*alt-substitute.txt*          For NVIM v0.8.0         Last change: 2023 May 29
+*alt-substitute.txt*         For NVIM v0.8.0         Last change: 2023 July 19
 
 ==============================================================================
 Table of Contents                           *alt-substitute-table-of-contents*
