@@ -28,8 +28,8 @@ end
 ---@param flags string
 ---@param language string -- the regex flavor to use
 ---@nodiscard
----@return integer **one-based** startPos of match, nil if no match
----@return integer **one-based** endPos of match, nil if no match
+---@return integer? **one-based** startPos of match, nil if no match
+---@return integer? **one-based** endPos of match, nil if no match
 function M.find(str, toSearch, fromIdx, flags, language)
 	local startPos, endPos
 	local plain = false

@@ -17,11 +17,11 @@ describe("calculate highlight positions: ", function()
 	end
 
 	-----------------------------------------------------------------------------
-
+	---@diagnostic disable: undefined-field
 	it("Search & Replace (Base)", function()
 		local params = { "foobar", "1234", "" }
 		local expected = { {}, { { startPos = 1, endPos = 4 } }, {}, {} }
-		assert.same(expected, calc(params))
+		assert.same(expected, calc(params)) 
 	end)
 	it("only search", function()
 		local params = { "mod", "", "" }

@@ -1,10 +1,11 @@
 describe("parameter processing: ", function()
 	local splitByUnescapedSlash = require("alt-substitute.process-parameters").splitByUnescapedSlash
 
+	---@diagnostic disable: undefined-field
 	it("Standard Case", function()
 		local input = "/search/repl/g"
 		local params = splitByUnescapedSlash(input)
-		assert.same({"search", "repl", "g"}, params)
+		assert.same({ "search", "repl", "g" }, params) 
 	end)
 
 	it("escaping the slash", function()
