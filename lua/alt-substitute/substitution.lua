@@ -104,7 +104,7 @@ function M.confirm(opts, showNotification, regexFlavor)
 		vim.notify("Search string is empty.", warn)
 		return
 	elseif invalidPattern then
-		vim.notify('Invalid pattern used.', warn)
+		vim.notify("Invalid pattern used.", warn)
 		return
 	end
 	if invalidFlagsUsed then

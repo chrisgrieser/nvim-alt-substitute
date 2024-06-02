@@ -21,7 +21,7 @@ describe("calculate highlight positions: ", function()
 	it("Search & Replace (Base)", function()
 		local params = { "foobar", "1234", "" }
 		local expected = { {}, { { startPos = 1, endPos = 4 } }, {}, {} }
-		assert.same(expected, calc(params)) 
+		assert.same(expected, calc(params))
 	end)
 	it("only search", function()
 		local params = { "mod", "", "" }
@@ -63,6 +63,4 @@ describe("calculate highlight positions: ", function()
 		local expected = { {}, { { startPos = 1, endPos = 4 } }, {}, {} }
 		assert.same(expected, calc(params))
 	end)
-
-
 end)

@@ -20,7 +20,7 @@ function M.splitByUnescapedSlash(str)
 		if vim.endswith(prevMatch, "\\") then
 			splitStr[#splitStr] = prevMatch:sub(1, -2) .. "/" .. match
 		else
-			table.insert(splitStr, match)	
+			table.insert(splitStr, match)
 		end
 	end
 
@@ -39,7 +39,7 @@ end
 ---@return string flags
 function M.process(opts, curBufNum)
 	local params = M.splitByUnescapedSlash(opts.args)
-	local toSearch = params[1] or "" 
+	local toSearch = params[1] or ""
 	local toReplace = params[2] or ""
 	local flags = params[3] or ""
 

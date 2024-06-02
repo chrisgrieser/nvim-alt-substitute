@@ -11,25 +11,24 @@ describe("parameter processing: ", function()
 	it("escaping the slash", function()
 		local input = [[/some\/path/repl/g]]
 		local params = splitByUnescapedSlash(input)
-		assert.same({"some/path", "repl", "g"}, params)
+		assert.same({ "some/path", "repl", "g" }, params)
 	end)
 
 	it("empty replacement", function()
 		local input = [[/foobar//i]]
 		local params = splitByUnescapedSlash(input)
-		assert.same({"foobar", "", "i"}, params)
+		assert.same({ "foobar", "", "i" }, params)
 	end)
 
 	it("no flags", function()
 		local input = [[/foo/bar/]]
 		local params = splitByUnescapedSlash(input)
-		assert.same({"foo", "bar"}, params)
+		assert.same({ "foo", "bar" }, params)
 	end)
 
 	it("only flags", function()
 		local input = [[///g]]
 		local params = splitByUnescapedSlash(input)
-		assert.same({"", "", "g"}, params)
+		assert.same({ "", "", "g" }, params)
 	end)
-
 end)
