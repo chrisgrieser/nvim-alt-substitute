@@ -1,4 +1,4 @@
-*alt-substitute.txt*         For NVIM v0.8.0         Last change: 2024 June 01
+*alt-substitute.txt* Auto-generated from README.md. Do not make PRs to this file.
 
 ==============================================================================
 Table of Contents                           *alt-substitute-table-of-contents*
