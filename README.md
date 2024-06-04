@@ -6,7 +6,7 @@ A substitute of vim's `:substitute` that uses lua patterns instead of vim regex.
 
 
 > [!NOTE]
-> The plugin is not maintained anymore. Please use it's far more powerful
+> The plugin is not maintained anymore. Please use its far more powerful
 > successor,
 > [nvim-rip-substitute](https://github.com/chrisgrieser/nvim-rip-substitute).
 
