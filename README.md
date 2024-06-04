@@ -1,7 +1,17 @@
 # nvim-alt-substitute
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-alt-substitute"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-alt-substitute/shield" /></a>
-<!-- vale Microsoft.Adverbs = NO --><!-- vale RedHat.Contractions = NO -->
+
+
 A substitute of vim's `:substitute` that uses lua patterns instead of vim regex. Since you really don't want to learn a whole new flavor of regex just to be able to make search-and-replace operations in your editor.
+
+
+> [!NOTE]
+> The plugin is not maintained anymore. Please use it's far more powerful
+> successor,
+> [nvim-rip-substitute](https://github.com/chrisgrieser/nvim-rip-substitute).
+
+---
+
 
 https://user-images.githubusercontent.com/73286100/231134276-e33b4ee8-611c-4b27-9c57-031ae13fc268.mp4
 
